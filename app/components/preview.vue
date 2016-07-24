@@ -52,19 +52,19 @@
         <tr><td><h3>单个教学目标：</h3></td></tr>
         <tr v-for="target in item.targets">
           <td :style="{color: target.highlight ? '#f70' : ''}">{{target.question}}</td>
-          <td v-for="option in $config.answer_options" :style="style(percent[$index][$parent.$index])">{{percent[$index][$parent.$index]}}%</td>
+          <td v-for="option in $config.answer_options" :style="style(percent[$index][$parent.$index])">{{percent[$index][$parent.$index] | toFixed}}%</td>
         </tr>
         <tr><td></td></tr>
         <tr>
           <td><h3>意见与建议：</h3></td>
         </tr>
-        <tr v-for="(ip, item) in item.receives">
+        <tr v-for="(ip, item) in item.receives" v-if="item.note">
           <td title="{{ip}}" style="flex: initial; width: 6em">{{item.name}}</td>
           <td>{{item.note}}</td>
         </tr>
         <tr><td></td></tr>
         <tr>
-          <td style="flex: initial">反馈人数：</td>
+          <td style="flex: initial; font-weight: bold">反馈人数：</td>
           <td>{{item.receives_count}}人</td>
         </tr>
         <tr><td></td></tr>

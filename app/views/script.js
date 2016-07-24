@@ -91,7 +91,7 @@
           window.localStorage.setItem('wedn_realname', h.value)
           continue
         }
-        alert('同学，请填写姓名！')
+        alert('同学，请正确填写姓名！')
         return false
       }
       if (h.name === 'hash') {

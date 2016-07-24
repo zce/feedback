@@ -2,12 +2,12 @@ import electron from 'electron'
 import config from './config'
 import * as utils from './utils'
 import * as storage from './storage'
-import * as server from './server'
 
 const dialog = electron.remote.dialog
 const BrowserWindow = electron.remote.BrowserWindow
 
-server.start()
+// import * as server from './server'
+// server.start()
 
 export default function Plugin () { }
 

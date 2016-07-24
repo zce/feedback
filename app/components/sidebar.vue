@@ -192,10 +192,16 @@
               <option value="light">light</option>
             </select>
           </li>
-          <!-- <li>
-            <label>port</label>
-            <input type="text">
-          </li> -->
+          <li>
+            <label>IP</label>
+            <select v-model="$root.server.ip">
+              <option v-for="ip in ips" value="{{ip}}">{{ip}}</option>
+            </select>
+          </li>
+          <li>
+            <label>Port</label>
+            <input type="text" v-model="$root.server.port">
+          </li>
         </ul>
       </div>
       <hr>
@@ -211,6 +217,7 @@
 </template>
 
 <script>
+  import os from 'os'
   import path from 'path'
 
   export default {
@@ -221,7 +228,20 @@
     data () {
       this.loadRecords()
       this.$storage.watchList(() => this.loadRecords())
-      return { records: [], width: 250, openOption: false }
+
+      const ips = []
+      const networkInterfaces = os.networkInterfaces()
+      Object.keys(networkInterfaces).map(key => {
+        const infos = networkInterfaces[key]
+        if (infos && infos.length) {
+          infos.forEach(info => {
+            if (info.family === 'IPv4'/* && info.address !== '127.0.0.1'*/) {
+              ips.push(info.address)
+            }
+          })
+        }
+      })
+      return { records: [], width: 250, openOption: false, ips }
     },
 
     methods: {

@@ -28,16 +28,15 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   // 注入请求客户端IP
-  if (app.get('env') === 'development') {
+  if (process.env.NODE_ENV === 'production') {
+    req.clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress
+  } else {
     // 测试允许多次提交
     req.clientIp = new Date().getTime()
-  } else {
-    req.clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress
   }
   // req.connection.socket.remoteAddress || '::1'
   // 注入是否本地请求
   req.isLocal = req.clientIp === '127.0.0.1' || req.clientIp === config.server_ip
-
   next()
 })
 
@@ -88,7 +87,7 @@ app.post(`/:stamp(${stampFormat})`, (req, res) => {
   // 存储
   const info = convert(stamp, req.body)
   if (!info) {
-    res.render('rated', { error: true, stamp: stamp, message: '同学，请完整勾选表单选项！' })
+    res.render('rated', { error: true, stamp: stamp, message: '同学，请正确并完整填写表单！' })
     return false
   }
 
@@ -102,30 +101,30 @@ app.post(`/:stamp(${stampFormat})`, (req, res) => {
 
 function convert (stamp, body) {
   const targets = storage.get(stamp).targets
+  if (!(body.name.trim() && body.hash.trim())) return null
   const marksKeys = Object.keys(body).filter(k => k && k !== 'name' && k !== 'hash' && k !== 'note')
   const validated = targets.length === marksKeys.length
   if (!validated) return null
-
   const marks = {}
   marksKeys.forEach(k => { marks[k] = parseInt(body[k], 10) })
   const feedback = {
-    name: body.name,
-    hash: body.hash,
-    note: body.note,
+    name: body.name.trim(),
+    hash: body.hash.trim(),
+    note: body.note.trim(),
     marks: marks
   }
 
   return feedback
 }
 
-export function start () {
-  config.server_ip = getLocalAreaIp()
-  // 启动服务
-  const server = config.server = app.listen(config.server_port, config.server_ip, error => {
-    if (error) return logger.fatal(error)
-    const addr = server.address()
-    const link = `http://${addr.address}:${addr.port}/`
-    console.log(`server run @ ${link}`)
-    config.server_link = link
-  })
-}
+// export function start () {
+//   config.server_ip = getLocalAreaIp()
+//   // 启动服务
+//   const server = config.server = app.listen(config.server_port, config.server_ip, error => {
+//     if (error) return logger.fatal(error)
+//     const addr = server.address()
+//     const link = `http://${addr.address}:${addr.port}/`
+//     console.log(`server run @ ${link}`)
+//     config.server_link = link
+//   })
+// }
