@@ -48,19 +48,26 @@
           <td>综合结果：</td>
           <td v-for="a in percent" :style="style(a.total/a.count)">{{a.total/a.count | toFixed}}%</td>
         </tr>
-        <tr><td style="font-weight:bold">单个教学目标：</td></tr>
+        <tr><td></td></tr>
+        <tr><td><h3>单个教学目标：</h3></td></tr>
         <tr v-for="target in item.targets">
           <td :style="{color: target.highlight ? '#f70' : ''}">{{target.question}}</td>
           <td v-for="option in $config.answer_options" :style="style(percent[$index][$parent.$index])">{{percent[$index][$parent.$index]}}%</td>
         </tr>
         <tr><td></td></tr>
         <tr>
-          <td><h3>意见与建议</h3></td>
+          <td><h3>意见与建议：</h3></td>
         </tr>
         <tr v-for="(ip, item) in item.receives">
-          <td title="{{ip}}" style="flex: initial">{{item.name}}</td>
+          <td title="{{ip}}" style="flex: initial; width: 6em">{{item.name}}</td>
           <td>{{item.note}}</td>
         </tr>
+        <tr><td></td></tr>
+        <tr>
+          <td style="flex: initial">反馈人数：</td>
+          <td>{{item.receives_count}}人</td>
+        </tr>
+        <tr><td></td></tr>
       </tbody>
     </table>
     <div class="actions">
@@ -148,7 +155,7 @@
           answer_options: this.$config.answer_options
         })
         this.$electron.remote.dialog.showSaveDialog({
-          title: 'helloworld',
+          title: `保存${this.item.datetime}详细报告`,
           filters: [
             { name: 'HTML', extensions: ['html'] },
             { name: 'All Files', extensions: ['*'] }
