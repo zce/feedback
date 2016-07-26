@@ -8,10 +8,9 @@ import bodyParser from 'body-parser'
 import config from './config'
 import * as storage from './storage'
 import { main as logger } from './logger'
-import { getLocalAreaIp } from './utils'
 
 const stampFormat = '\\w{' + config.stamp_length + '}'
-const staticDir = path.resolve(config.app_path, 'views')
+const staticDir = path.resolve(config.app.path, 'www')
 
 const app = express()
 
@@ -19,6 +18,7 @@ app.set('view engine', 'xtpl')
 app.set('views', staticDir)
 
 app.use(express.static(staticDir))
+
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use((req, res, next) => {
@@ -37,6 +37,7 @@ app.use((req, res, next) => {
   // req.connection.socket.remoteAddress || '::1'
   // 注入是否本地请求
   req.isLocal = req.clientIp === '127.0.0.1' || req.clientIp === config.server_ip
+
   next()
 })
 
@@ -62,7 +63,7 @@ app.get(`/:stamp(${stampFormat})`, (req, res) => {
  */
 app.post(`/:stamp(${stampFormat})`, (req, res) => {
   if (req.isLocal && !config.allow_admin_rating) {
-    res.render('rated', { error: true, message: '您是管理员，不允许参加测评！' })
+    res.render('rated', { error: true, message: '您是管理员，不允许参加反馈！' })
     return false
   }
 
@@ -75,12 +76,12 @@ app.post(`/:stamp(${stampFormat})`, (req, res) => {
   }
 
   if (data.status !== config.status_keys.rating) {
-    res.render('rated', { error: true, message: '测评已经结束，不可以继续评价了！' })
+    res.render('rated', { error: true, message: '反馈已经结束，不可以继续提交了！' })
     return false
   }
 
   if (data.receives[req.clientIp] && !config.allow_student_repeat) {
-    res.render('rated', { error: true, message: '你已经评价过了，不可以重复评价！' })
+    res.render('rated', { error: true, message: '你已经提交过了，不可以重复提交！' })
     return false
   }
 
@@ -117,14 +118,26 @@ function convert (stamp, body) {
   return feedback
 }
 
-// export function start () {
-//   config.server_ip = getLocalAreaIp()
-//   // 启动服务
-//   const server = config.server = app.listen(config.server_port, config.server_ip, error => {
-//     if (error) return logger.fatal(error)
-//     const addr = server.address()
-//     const link = `http://${addr.address}:${addr.port}/`
-//     console.log(`server run @ ${link}`)
-//     config.server_link = link
-//   })
-// }
+let server
+
+function listen (callback) {
+  server = app.listen(config.server.port, config.server.address, error => {
+    if (error) {
+      server = null
+      return logger.fatal(error)
+    }
+    const addr = server.address()
+    config.server.port = addr.port
+    config.server.address = addr.address
+    console.log(`server run @ http://${addr.address}:${addr.port}/`)
+    typeof callback === 'function' && callback()
+  })
+}
+
+export function start (callback) {
+  // 启动服务
+  if (server && server.listening) {
+    return server.close(listen.bind(server, callback))
+  }
+  listen(callback)
+}

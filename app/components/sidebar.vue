@@ -3,6 +3,7 @@
     // display: flex;
     position: relative;
     transition: width 0.2s ease-in-out;
+    // transition-delay: 0.2s;
 
     .panel {
       display: flex;
@@ -106,11 +107,13 @@
 
       input, select {
         font-size: 12/16rem;
-        width: 100/16rem;
+        width: 55%;
+        // max-width: 150/16rem;
+        min-width: 100/16rem;
         height: 26/16rem;
-        padding: 2/16rem 4/16rem;
+        padding: 2/16rem 6/16rem;
         border: 1/16rem solid;
-        border-radius: 0;
+        border-radius: 4/16rem;
       }
     }
 
@@ -146,79 +149,83 @@
 </style>
 
 <template>
-  <aside class="sidebar" :class="{ 'open-option': openOption }" :style="{ width: open ? width + 'px': '0', transition: transition }">
-    <div class="panel menu">
-      <h1 class="logo drag">{{$config.app_name}}</h1>
+  <aside class="sidebar" :class="{'open-option': openOption}" :style="{width: open ? width + 'px': '0', transition: transition}">
+    <section class="panel menu">
+      <h1 class="logo drag">{{$config.app.name}}</h1>
       <hr>
-      <h3>操作</h3>
+      <h3>{{$t('sidebar.actions.title')}}</h3>
       <div class="scroll actions">
         <ul>
-          <!-- <li v-link="{ name: 'dashboard' }" :class="{active: $root.title === '仪表盘'}">仪表盘</li> -->
-          <!-- <li v-link="{ name: 'demo' }">Demo</li> -->
-          <li v-link="{ name: 'start' }" :class="{active: $root.title === '创建新的反馈统计'}">创建新的反馈</li>
+          <!-- <li v-link="{name: 'dashboard'}">{{$t('sidebar.actions.dashboard')}}</li> -->
+          <!-- <li v-link="{name: 'vuex'}">VUEX</li> -->
+          <li v-link="{name: 'start'}" :class="{active: $root.title === '创建新的反馈统计'}">{{$t('sidebar.actions.start')}}</li>
         </ul>
       </div>
       <hr>
-      <h3>反馈记录</h3>
+      <h3>{{$t('sidebar.records.title')}}</h3>
       <div class="scroll">
         <ul>
-          <li v-for="item in records" track-by="$index" :class="{ active: $root.title === item.stamp }" title="{{ item.path }}" v-link="{ name: 'watch', params: { item: item.stamp } }">
+          <li v-for="item in records" track-by="$index" :class="{active: $root.title === item.stamp}" title="{{item.path}}" v-link="{name: 'watch', params: {item: item.stamp}}">
             <span class="name">{{item.name}}</span>
-            <i class="fa fa-external-link" title="在文件夹中找到" @click="reveal(item, $event)"></i>
-            <i class="fa fa-times" title="删除到回收站" @click="remove(item, $event)"></i>
+            <i class="fa fa-external-link" title="{{$t('sidebar.records.revealinfinder', {name: item.name})}}" @click="reveal(item, $event)"></i>
+            <i class="fa fa-times" title="{{$t('sidebar.records.movetotrash', {name: item.name})}}" @click="remove(item, $event)"></i>
           </li>
         </ul>
       </div>
       <hr>
-      <h3>帮助</h3>
+      <h3>{{$t('sidebar.help.title')}}</h3>
       <div class="scroll actions">
         <ul>
-          <li @click="toggleOption()">设置</li>
-          <li @click="$root.window('toggle-about')">关于</li>
+          <li @click="toggleOption()">{{$t('sidebar.help.options')}}</li>
+          <li @click="$parent.window('toggle-about')">{{$t('sidebar.help.about')}}</li>
         </ul>
       </div>
-    </div>
-    <div class="panel option">
-      <h1>Settings</h1>
+    </section>
+    <section class="panel option">
+      <h1>{{$t('sidebar.settings.title')}}</h1>
       <hr>
-      <h3>选项</h3>
+      <h3>{{$t('sidebar.options.title')}}</h3>
       <div class="scroll">
         <ul>
           <li>
-            <label>主题</label>
-            <select v-model="$root.theme">
-              <option value="default">default</option>
-              <option value="dark">dark</option>
-              <option value="light">light</option>
+            <label for="theme">{{$t('sidebar.options.theme.title')}}</label>
+            <select id="theme" v-model="$root.window_theme">
+              <option v-for="(key, value) in themes" value="{{key}}">{{$t('sidebar.options.theme.' + value)}}</option>
             </select>
           </li>
           <li>
-            <label>IP</label>
-            <select v-model="$root.server.ip">
-              <option v-for="ip in ips" value="{{ip}}">{{ip}}</option>
+            <label for="address">{{$t('sidebar.options.address')}}</label>
+            <select id="address" v-model="$root.server_address">
+              <option v-for="item in addresses" value="{{item}}">{{item}}</option>
             </select>
           </li>
           <li>
-            <label>Port</label>
-            <input type="text" v-model="$root.server.port">
+            <label for="port">{{$t('sidebar.options.port')}}</label>
+            <input id="port" type="number" v-model="$root.server_port" debounce="500" number lazy>
+          </li>
+          <li>
+            <label for="locales">{{$t('sidebar.options.locales')}}</label>
+            <select id="locales" v-model="$root.lang">
+              <option v-for="(key, value) in locales" value="{{key}}">{{value.name}}</option>
+            </select>
           </li>
         </ul>
       </div>
       <hr>
-      <h3>帮助</h3>
+      <h3>{{$t('sidebar.help.title')}}</h3>
       <div class="scroll actions">
         <ul>
-          <li @click="toggleOption()">返回</li>
+          <li @click="toggleOption()">{{$t('sidebar.help.back')}}</li>
         </ul>
       </div>
-    </div>
+    </section>
     <i class="resizer" @mousedown="mousedown($event)"></i>
   </aside>
 </template>
 
 <script>
-  import os from 'os'
   import path from 'path'
+  import locales from '../locales'
 
   export default {
     props: {
@@ -229,19 +236,15 @@
       this.loadRecords()
       this.$storage.watchList(() => this.loadRecords())
 
-      const ips = []
-      const networkInterfaces = os.networkInterfaces()
-      Object.keys(networkInterfaces).map(key => {
-        const infos = networkInterfaces[key]
-        if (infos && infos.length) {
-          infos.forEach(info => {
-            if (info.family === 'IPv4'/* && info.address !== '127.0.0.1'*/) {
-              ips.push(info.address)
-            }
-          })
-        }
-      })
-      return { records: [], width: 250, openOption: false, ips }
+      return {
+        locales: locales,
+        // themes: { default: '默认', dark: '暗色', light: '亮色' },
+        themes: { default: 'default', dark: 'dark', light: 'light' },
+        addresses: this.$utils.getMachineAddresses(),
+        records: [],
+        width: 250,
+        openOption: false
+      }
     },
 
     methods: {
@@ -249,8 +252,8 @@
         this.$storage.getList().then(files => {
           this.records = files.map(file => ({
             name: file,
-            stamp: path.basename(file, this.$config.storage_ext),
-            path: path.join(this.$config.storage_root, file)
+            stamp: path.basename(file, this.$config.storage.ext),
+            path: path.join(this.$config.storage.root, file)
           }))
         })
       },
@@ -258,7 +261,7 @@
       remove (item, e) {
         e.preventDefault()
         e.stopPropagation()
-        if (!confirm(`确认删除『${item.stamp}${this.$config.storage_ext}』？`)) return false
+        if (!confirm(`确认删除『${item.stamp}${this.$config.storage.ext}』？`)) return false
 
         try {
           // 删除到回收站
@@ -271,7 +274,7 @@
         // 跳转到第一个记录
         const find = this.records.some(r => {
           if (r.stamp !== item.stamp) {
-            this.$router.go({ name: 'watch', params: { item: r.stamp } })
+            this.$router.go({ name: 'watcher', params: { item: r.stamp } })
             return true
           }
         })
@@ -301,7 +304,7 @@
 
       mousemove (e) {
         let width = this.beginWidth + e.clientX - this.beginX
-        width = width < 120 ? 120 : width
+        width = width < 200 ? 200 : width
         width = width > 600 ? 600 : width
         this.width = width
       },

@@ -75,18 +75,18 @@
         </tr>
         <tr>
           <td>已完成测评人数</td>
-          <td style="color:#f40">{{ item.receives_count }}人</td>
+          <td style="color:#f40">{{item.receives_count}}人</td>
         </tr>
         <tr v-if="item.status">
           <td>反馈状态</td>
-          <td style="color:#f60">{{ item.status }}</td>
+          <td style="color:#f60">{{item.status}}</td>
         </tr>
         <tr v-if="item.status === $config.status_keys.rating">
           <td>测评链接</td>
           <td>
-            <a class="js-external-link" href="{{$config.server_link + item.stamp}}">{{$config.server_link + item.stamp}}</a>
+            <a class="js-external-link" href="{{server_link + item.stamp}}">{{server_link + item.stamp}}</a>
             <span>&nbsp;&nbsp;</span>
-            <a @click="copy($config.server_link + item.stamp)">点击复制</a>
+            <a @click="copy(server_link + item.stamp)">点击复制</a>
           </td>
         </tr>
       </tbody>
@@ -105,7 +105,10 @@
       // const stamp = this.$route.params.item
       // this.$storage.watch(stamp, () => this.loadData(stamp))
       // return { item: this.loadData(stamp) }
-      return { item: {} }
+      this.$root.$on('server_link_changed', () => {
+        this.server_link = `http://${this.$root.server_address}:${this.$root.server_port}/`
+      })
+      return { item: {}, server_link: `http://${this.$root.server_address}:${this.$root.server_port}/` }
     },
 
     route: {

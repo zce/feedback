@@ -139,6 +139,7 @@
         for (let s in this.percent) {
           this.absorptivity += this.percent[s].total / this.percent[s].count * this.$config.answer_options[s].ratio
         }
+        console.log(this.absorptivity)
         return this.absorptivity
       },
 
@@ -147,7 +148,7 @@
       },
 
       save () {
-        const template = fs.readFileSync(path.join(this.$config.app_path, 'views/report.xtpl'), 'utf8')
+        const template = fs.readFileSync(path.join(this.$config.app.path, 'www', 'report.xtpl'), 'utf8')
         const html = new XTemplate(template).render({
           item: this.item,
           percent: this.percent,

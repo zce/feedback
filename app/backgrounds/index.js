@@ -9,6 +9,18 @@ import createWindow from './window'
 
 let mainWindow
 
+const shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
+  // Someone tried to run a second instance, we should focus our window.
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore()
+    mainWindow.focus()
+  }
+})
+
+if (shouldQuit) {
+  app.quit()
+}
+
 app.on('ready', () => {
   // setAppMenu()
   mainWindow = createWindow('main', {
@@ -16,6 +28,8 @@ app.on('ready', () => {
     // transparent: true,
     x: 0,
     y: 0,
+    minWidth: 1200,
+    minHeight: 720,
     width: 1200,
     height: 720,
     useContentSize: true,
@@ -25,8 +39,8 @@ app.on('ready', () => {
     mainWindow.loadURL(`file://${__dirname}/index.html`)
   } else {
     mainWindow.loadURL('http://localhost:2080/index.html')
-    mainWindow.webContents.openDevTools({ detach: true })
-    // mainWindow
+    mainWindow.webContents.openDevTools({ detach: false })
+    // 载入开发工具
     require('devtron').install()
     require('vue-devtools').install()
   }
