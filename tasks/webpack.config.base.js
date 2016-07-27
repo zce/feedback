@@ -17,7 +17,7 @@ const nodeModules = (() => {
 const config = module.exports = {
   context: path.resolve(__dirname, '..'),
   output: {
-    path: './build/',
+    path: './build/core/',
     filename: '[name].js',
     libraryTarget: 'commonjs2'
   },

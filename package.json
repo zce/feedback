@@ -1,7 +1,7 @@
 {
   "scripts": {
     "postinstall": "cd app && npm install && cd ..",
-    "clean": "rimraf build/*",
+    "clean": "rimraf build/core/*",
     "clean:npm": "rimraf node_modules && rimraf **/node_modules",
     "webpack": "webpack --progress --hide-modules",
     "watch": "cross-env NODE_ENV=development webpack-dev-server --config tasks/webpack.config.renderer.js --hot --inline --colors",
