@@ -158,6 +158,7 @@
         <ul>
           <!-- <li v-link="{name: 'dashboard'}">{{$t('sidebar.actions.dashboard')}}</li> -->
           <!-- <li v-link="{name: 'vuex'}">VUEX</li> -->
+          <li v-link="{name: 'update'}">UPDATE</li>
           <li v-link="{name: 'start'}" :class="{active: $root.title === '创建新的反馈统计'}">{{$t('sidebar.actions.start')}}</li>
         </ul>
       </div>

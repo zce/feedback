@@ -5,9 +5,9 @@ export default {
     component: Vue.component('dashboard', require('../views/dashboard')),
     name: 'dashboard'
   },
-  '/demo': {
-    component: Vue.component('demo', require('../views/demo')),
-    name: 'demo'
+  '/update': {
+    component: Vue.component('update', require('../views/update')),
+    name: 'update'
   },
   '/vuex': {
     component: Vue.component('vuex', require('../views/vuex')),
