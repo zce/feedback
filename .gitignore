@@ -37,7 +37,7 @@ jspm_packages
 .node_repl_history
 
 # Build directrory
-build
+build/core
 
 # Distribution directrory
 dist
