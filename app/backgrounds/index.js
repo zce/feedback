@@ -4,7 +4,7 @@
 // window from here.
 
 import { app } from 'electron'
-// import setAppMenu from './menu'
+import setAppMenu from './menu'
 import createWindow from './window'
 import update from './update'
 
@@ -24,10 +24,10 @@ if (shouldQuit) {
 
 app.on('ready', () => {
   update(() => {
-    // setAppMenu()
+    setAppMenu()
     mainWindow = createWindow('main', {
-      x: 0,
-      y: 0,
+      // x: 0,
+      // y: 0,
       minWidth: 1200,
       minHeight: 720,
       width: 1200,
