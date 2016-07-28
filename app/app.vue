@@ -106,14 +106,14 @@
   import sidebar from './components/sidebar'
   import about from './components/about'
   // import 我们刚刚创建的 store
-  // import store from './vuex/store'
+  import store from './libraries/vuex/store'
 
   const mainWindow = electron.remote.getCurrentWindow()
 
   export default {
     components: { sidebar, about },
     // 在根组件加入 store，让它的子组件和 store 连接
-    // store,
+    store,
     ready () {
       this.$server.start(() => {
         const restart = (n, o) => {
@@ -121,7 +121,6 @@
           this.$config.server.address = this.server_address
           this.$config.server.port = this.server_port
           this.$option.set('server_port', this.server_port)
-          this.$emit('server_link_changed')
           this.$server.start()
         }
         this.$watch('server_address', restart)

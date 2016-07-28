@@ -156,17 +156,17 @@
       <h3>{{$t('sidebar.actions.title')}}</h3>
       <div class="scroll actions">
         <ul>
-          <!-- <li v-link="{name: 'dashboard'}">{{$t('sidebar.actions.dashboard')}}</li> -->
-          <!-- <li v-link="{name: 'vuex'}">VUEX</li> -->
-          <li v-link="{name: 'update'}">UPDATE</li>
-          <li v-link="{name: 'start'}" :class="{active: $root.title === '创建新的反馈统计'}">{{$t('sidebar.actions.start')}}</li>
+          <li v-link="{name: 'dashboard'}" :class="{active: $route.name === 'dashboard'}">{{$t('sidebar.actions.dashboard')}}</li>
+          <li v-link="{name: 'start'}" :class="{active: $route.name === 'start'}">{{$t('sidebar.actions.start')}}</li>
+          <li v-link="{name: 'update'}" :class="{active: $route.name === 'update'}">{{$t('sidebar.actions.update')}}</li>
+          <li v-link="{name: 'vuex'}" :class="{active: $route.name === 'vuex'}">{{$t('sidebar.actions.vuex')}}</li>
         </ul>
       </div>
       <hr>
       <h3>{{$t('sidebar.records.title')}}</h3>
       <div class="scroll">
         <ul>
-          <li v-for="item in records" track-by="$index" :class="{active: $root.title === item.stamp}" title="{{item.path}}" v-link="{name: 'watch', params: {item: item.stamp}}">
+          <li title="{{item.path}}" v-for="item in records" track-by="$index" :class="{active: $route.name === 'watch' && $route.params.item === item.stamp}" v-link="{name: 'watch', params: {item: item.stamp}}">
             <span class="name">{{item.name}}</span>
             <i class="fa fa-external-link" title="{{$t('sidebar.records.revealinfinder', {name: item.name})}}" @click="reveal(item, $event)"></i>
             <i class="fa fa-times" title="{{$t('sidebar.records.movetotrash', {name: item.name})}}" @click="remove(item, $event)"></i>
@@ -226,7 +226,7 @@
 
 <script>
   import path from 'path'
-  import locales from '../locales'
+  import locales from '../assets/locales'
 
   export default {
     props: {
@@ -281,7 +281,7 @@
         })
 
         // 没有记录跳转到开始界面
-        find || this.$router.go({ name: 'start' })
+        find || this.$router.go({ name: 'dashboard' })
       },
 
       reveal (item, e) {

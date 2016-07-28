@@ -4,10 +4,7 @@ import './assets/css/font-awesome.css'
 import './assets/less/style.less'
 
 import Vue from 'vue'
-
-// // Vuex
-// import Vuex from 'vuex'
-// Vue.use(Vuex)
+console.log(1111)
 
 // // Keen UI
 // import Keen from 'keen-ui'
@@ -16,7 +13,7 @@ import Vue from 'vue'
 // i18n
 import I18n from 'vue-i18n'
 Vue.use(I18n)
-import locales from './locales'
+import locales from './assets/locales'
 Object.keys(locales).forEach(item => Vue.locale(item, locales[item]))
 
 // custom plugin

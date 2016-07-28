@@ -2,8 +2,7 @@
   "name": "feedback",
   "productName": "Feedback",
   "version": "0.2.0",
-  "description": "A Feedback application for Itcast",
-  "updated": "2016-07-27T16:56:12.476Z",
+  "description": "A Feedback application for Itcast, Inc.",
   "main": "index.js",
   "repository": {
     "type": "git",

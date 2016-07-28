@@ -1,13 +1,10 @@
 import Vue from 'vue'
 
+// console.log(require('../views/dashboard').name)
 export default {
   '/': {
     component: Vue.component('dashboard', require('../views/dashboard')),
     name: 'dashboard'
-  },
-  '/update': {
-    component: Vue.component('update', require('../views/update')),
-    name: 'update'
   },
   '/vuex': {
     component: Vue.component('vuex', require('../views/vuex')),
@@ -21,8 +18,12 @@ export default {
     component: Vue.component('watch', require('../views/watch')),
     name: 'watch'
   },
-  '/preview/:item': {
-    component: Vue.component('preview', require('../views/preview')),
-    name: 'preview'
+  '/demo': {
+    component: Vue.component('demo', require('../views/demo')),
+    name: 'demo'
+  },
+  '/update': {
+    component: Vue.component('update', require('../views/update')),
+    name: 'update'
   }
 }

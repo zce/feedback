@@ -4,7 +4,8 @@
     justify-content: center;
   }
   img {
-    width: 265px;
+    margin-top: -25px;
+    width: 450px;
   }
   code {
     background-color: rgba(40, 56, 76, .5);
@@ -35,14 +36,23 @@
 
 <template>
   <div class="inner">
-    <img src="../assets/img/itcast.svg" alt="itcast">
-    <h1>Itcast, Inc. Feedback</h1>
-    <p>请点击左侧菜单中的创建，开始新的反馈统计</p>
+    <img src="../assets/img/logo.png" alt="electron-vue">
+    <h1>Hello Electron + Vue.</h1>
     <p>
-      <strong>v{{versions.feedback}}</strong> using electron v{{ versions.electron }} with node v{{ versions.node }} on the {{ platform }} platform {{arch}} arch.
+      You are currently at <code>`{{ route.path }}`</code> on the <code>`{{ route.name }}`</code> view.
     </p>
-    <ul>
-      <li><a v-link="{ name: 'start' }">开始创建新的反馈统计</a></li>
+    <p>
+      You are using electron v{{ versions['atom-shell'] }} with node v{{ versions.node }} on the {{ platform }} platform.
+    </p>
+    <p>{{$db.options.message}}</p>
+    <ul class="js-external-link">
+      <li><a href="https://github.com/zce/electron-boilerplate">documentation</a> |</li>
+      <li><a href="http://electron.atom.io/">electron</a> |</li>
+      <li><a href="http://vuejs.org/">vue.js</a> |</li>
+      <li><a v-link="{ name: 'demo' }">demo</a></li>
+    </ul>
+    <ul class="js-external-link">
+      <li><a href="http://{{$config.server.address}}:{{$config.server.port}}/">http://{{$config.server.address}}:{{$config.server.port}}/</a></li>
     </ul>
   </div>
 </template>
@@ -54,11 +64,9 @@
     name: 'dashboard',
     components: {},
     data () {
-      process.versions.feedback = this.$config.app.version
       return {
-        // route: this.$router._currentRoute,
+        route: this.$router._currentRoute,
         platform: os.platform(),
-        arch: os.arch(),
         versions: process.versions
       }
     }
