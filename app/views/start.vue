@@ -66,7 +66,7 @@
 
     data () {
       return {
-        class_name: '',
+        class_name: this.$option.get('last_class_name'),
         targets: '',
         placeholder: `请在此处输入教学目标，一行一条，重点条目前面用“*”（英文半角）标记。例如：
 
@@ -85,6 +85,7 @@
         if (!/^.+?(传智|黑马).+?(基础|就业)\d{1,5}期（\d{8}(面授|双元)）\s?$/.test(this.class_name)) {
           return this.$dialog.error('请输入正确格式的班级名称')
         }
+        this.$option.set('last_class_name', this.class_name)
         if (!this.targets) {
           return this.$dialog.error('请输入教学目标')
         }
