@@ -4,8 +4,7 @@
     justify-content: center;
   }
   img {
-    margin-top: -25px;
-    width: 450px;
+    width: 265px;
   }
   code {
     background-color: rgba(40, 56, 76, .5);
@@ -20,14 +19,15 @@
     line-height: 24px;
   }
   a {
-    color: rgb(50, 174, 110);
+    color: #fff;
     text-decoration: none;
 
-    &:hover { color: rgb(40, 56, 76); }
+    &:hover { color: #fff; }
   }
   ul {
     list-style-type: none;
     margin-top: 10px;
+    padding: 0;
   }
   li {
     display: inline-block;
@@ -36,23 +36,14 @@
 
 <template>
   <div class="inner">
-    <img src="../assets/img/logo.png" alt="electron-vue">
-    <h1>Hello Electron + Vue.</h1>
+    <img src="../assets/img/itcast.svg" alt="itcast">
+    <h1>Itcast, Inc. Feedback</h1>
+    <p>请点击左侧菜单中的创建，开始新的反馈统计</p>
     <p>
-      You are currently at <code>`{{ route.path }}`</code> on the <code>`{{ route.name }}`</code> view.
+      <strong>v{{versions.feedback}}</strong> using electron v{{ versions.electron }} with node v{{ versions.node }} on the {{ platform }} platform {{arch}} arch.
     </p>
-    <p>
-      You are using electron v{{ versions['atom-shell'] }} with node v{{ versions.node }} on the {{ platform }} platform.
-    </p>
-    <p>{{$db.options.message}}</p>
-    <ul class="js-external-link">
-      <li><a href="https://github.com/zce/electron-boilerplate">documentation</a> |</li>
-      <li><a href="http://electron.atom.io/">electron</a> |</li>
-      <li><a href="http://vuejs.org/">vue.js</a> |</li>
-      <li><a v-link="{ name: 'demo' }">demo</a></li>
-    </ul>
-    <ul class="js-external-link">
-      <li><a href="http://{{$config.server.address}}:{{$config.server.port}}/">http://{{$config.server.address}}:{{$config.server.port}}/</a></li>
+    <ul>
+      <li><a v-link="{ name: 'start' }" class="btn btn-warning btn-lg">开始创建新的反馈统计</a></li>
     </ul>
   </div>
 </template>
@@ -64,9 +55,11 @@
     name: 'dashboard',
     components: {},
     data () {
+      process.versions.feedback = this.$config.app.version
       return {
-        route: this.$router._currentRoute,
+        // route: this.$router._currentRoute,
         platform: os.platform(),
+        arch: os.arch(),
         versions: process.versions
       }
     }

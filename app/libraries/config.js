@@ -9,7 +9,8 @@ export default {
     name: app.getName(),
     version: pkg.version,
     updated: pkg.updated,
-    description: pkg.description
+    description: pkg.description,
+    path: app.getAppPath()
   },
   storage: {
     root: path.resolve(app.getPath('userData'), 'data'), // ????
@@ -20,16 +21,26 @@ export default {
     address: '',
     port: 20800
   },
+  status_keys: {
+    initial: '尚未开始统计',
+    rating: '统计中',
+    rated: '统计完成',
+    sending: '邮件发送中',
+    send: '邮件发送完成'
+  },
+  answer_options: {
+    0: { short: 'A', full: 'A. 非常清楚', ratio: 1.0 },
+    1: { short: 'B', full: 'B. 基本清楚', ratio: 0.8 },
+    2: { short: 'C', full: 'C. 有点模糊', ratio: 0.5 },
+    3: { short: 'D', full: 'D. 几乎不懂', ratio: 0.1 }
+  },
+  allow_admin_rating: true,
+  allow_student_repeat: false,
   stamp_length: 8
 }
 
-// status_keys: {
-//   initial: '尚未开始统计',
-//   rating: '统计中',
-//   rated: '统计完成',
-//   sending: '邮件发送中',
-//   send: '邮件发送完成'
-// },
+// stamp_length: 8,
+
 // answer_options: {
 //   0: { short: 'A', full: 'A. 非常清楚' },
 //   1: { short: 'B', full: 'B. 基本清楚' },

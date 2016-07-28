@@ -18,9 +18,9 @@ export default {
     component: Vue.component('watch', require('../views/watch')),
     name: 'watch'
   },
-  '/demo': {
-    component: Vue.component('demo', require('../views/demo')),
-    name: 'demo'
+  '/preview/:item': {
+    component: Vue.component('preview', require('../views/preview')),
+    name: 'preview'
   },
   '/update': {
     component: Vue.component('update', require('../views/update')),
