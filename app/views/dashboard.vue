@@ -6,15 +6,6 @@
   img {
     width: 265px;
   }
-  code {
-    background-color: rgba(40, 56, 76, .5);
-    border-radius: 3px;
-    color: #fff;
-    font-weight: bold;
-    padding: 3px 6px;
-    margin: 0 3px;
-    vertical-align: bottom;
-  }
   p {
     line-height: 24px;
   }
@@ -39,9 +30,6 @@
     <img src="../assets/img/itcast.svg" alt="itcast">
     <h1>Itcast, Inc. Feedback</h1>
     <p>请点击左侧菜单中的创建，开始新的反馈统计</p>
-    <p>
-      <strong>v{{versions.feedback}}</strong> using electron v{{ versions.electron }} with node v{{ versions.node }} on the {{ platform }} platform {{arch}} arch.
-    </p>
     <ul>
       <li><a v-link="{ name: 'start' }" class="btn btn-warning btn-lg">开始创建新的反馈统计</a></li>
     </ul>

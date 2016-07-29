@@ -19,7 +19,9 @@ export const edit = {
     { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
     { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
     { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-    { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' }
+    { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' },
+    { type: 'separator' },
+    { label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: () => app.quit() }
   ]
 }
 
@@ -65,11 +67,6 @@ export const development = {
       label: 'Toggle DevTools',
       accelerator: 'Alt+CmdOrCtrl+I',
       click: () => BrowserWindow.getFocusedWindow().toggleDevTools()
-    },
-    {
-      label: 'Quit',
-      accelerator: 'CmdOrCtrl+Q',
-      click: () => app.quit()
     }
   ]
 }

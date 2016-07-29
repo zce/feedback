@@ -7,7 +7,6 @@
 <body>
   <app/>
   <script>
-    // alert(require('electron').remote.app.getAppPath())
     require('module').globalPaths.push(require('path').resolve(require('electron').remote.app.getAppPath()))
   </script>
   <% if (process.env.NODE_ENV === 'development') { %>

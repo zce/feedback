@@ -18,4 +18,7 @@ try {
   console.log(e.message)
 }
 
-require('./core.asar')
+// const Module = require('module')
+// Module.globalPaths.push(path.resolve(__dirname))
+// Module.globalPaths.push(path.resolve(__dirname, '../app.asar.unpacked'))
+require(path.resolve(__dirname, 'core.asar'))
