@@ -1,6 +1,6 @@
 {
   "name": "feedback",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "A Feedback application for Itcast, Inc.",
   "updated": "2016-07-29T02:56:12.476Z",
   "main": "main.js",

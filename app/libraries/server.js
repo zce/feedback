@@ -59,7 +59,7 @@ app.get(`/:stamp(${stampFormat})`, (req, res) => {
 })
 
 /**
- * POST /r/:stamp
+ * POST /:stamp
  */
 app.post(`/:stamp(${stampFormat})`, (req, res) => {
   if (req.isLocal && !config.allow_admin_rating) {
@@ -108,14 +108,12 @@ function convert (stamp, body) {
   if (!validated) return null
   const marks = {}
   marksKeys.forEach(k => { marks[k] = parseInt(body[k], 10) })
-  const feedback = {
+  return {
     name: body.name.trim(),
     hash: body.hash.trim(),
     note: body.note.trim(),
     marks: marks
   }
-
-  return feedback
 }
 
 let server
