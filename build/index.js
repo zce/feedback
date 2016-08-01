@@ -1,3 +1,27 @@
+/*!
+ * Feedback system
+ *   https://zce.github.io/feedback
+ *
+ * Date:
+ *   2016-07-30T23:56:12.476Z
+ *
+ * Maintainers:
+ *   汪磊 <ice@wedn.net> (http://github.com/zce)
+ *
+ * License:
+ *   https://github.com/zce/itcast-tms/tree/master/LICENSE
+ *   Released under the MIT license
+ *
+ * Thanks:
+ *   [Vue](https://vuejs.org)
+ *   [Electron](https://electron.atom.io)
+ *   [Desktop UI](https://github.com/zce/desktop-ui)
+ *   [Electron Bolierplate](https://github.com/zce/electron-boilerplate)
+ *   etc.
+ *
+ * Copyright 2015-2016 WEDN, Inc. and other contributors
+ */
+
 process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
 const os = require('os')
@@ -18,7 +42,4 @@ try {
   console.log(e.message)
 }
 
-// const Module = require('module')
-// Module.globalPaths.push(path.resolve(__dirname))
-// Module.globalPaths.push(path.resolve(__dirname, '../app.asar.unpacked'))
-require(path.resolve(__dirname, 'core.asar'))
+require('./core.asar')
