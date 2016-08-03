@@ -49,7 +49,7 @@
           <td v-for="a in percent" :style="style(a.total/a.count)">{{a.total/a.count | toFixed}}%</td>
         </tr>
         <tr><td></td></tr>
-        <tr><td><h3>单个教学目标：</h3></td></tr>
+        <tr><td><h3>单个学习目标：</h3></td></tr>
         <tr v-for="target in item.targets">
           <td :style="{color: target.highlight ? '#f70' : ''}">{{target.question}}</td>
           <td v-for="option in $config.answer_options" :style="style(percent[$index][$parent.$index])">{{percent[$index][$parent.$index] | toFixed}}%</td>

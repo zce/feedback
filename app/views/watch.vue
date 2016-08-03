@@ -64,7 +64,7 @@
           <td>{{item.class_name}}</td>
         </tr>
         <tr class="target">
-          <td>教学目标</td>
+          <td>学习目标</td>
           <td>
             <div class="select">
               <ol>

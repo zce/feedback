@@ -13,7 +13,7 @@
 <body>
   <div class="page">
     <h1 class="page-header">{{ datetime }} 学习反馈</h1>
-    <h5 class="title">亲爱的同学：</h5><p class="paragraph">为了全面提高教育质量，请你们对今天的课程教学目标作出实事求是的反馈。请对下列问题作出适当地回答。</p>
+    <h5 class="title">亲爱的同学：</h5><p class="paragraph">为了全面提高教育质量，请你们对今天的课程学习目标作出实事求是的反馈。请对下列问题作出适当地回答。</p>
     <hr>
     <h5 class="title">反馈信息：</h5>
 

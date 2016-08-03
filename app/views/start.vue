@@ -50,9 +50,9 @@
       <p class="help-desk">分校名+品牌+学科名+班级类型+期数（时间+授课模式），例如：<strong class="select">北京传智JavaEE基础88期（20160608面授）</strong></p>
     </div>
     <div class="form-control full">
-      <label for="editor">教学目标</label>
+      <label for="editor">学习目标</label>
       <textarea id="editor" v-model="targets" placeholder="{{placeholder}}"></textarea>
-      <!-- <p class="help-desk">请输入教学目标，一行一条</p> -->
+      <!-- <p class="help-desk">请输入学习目标，一行一条</p> -->
     </div>
     <button class="btn btn-primary btn-lg btn-block" @click="submit()">创建新的反馈统计</button>
   </div>
@@ -68,7 +68,7 @@
       return {
         class_name: this.$option.get('last_class_name'),
         targets: '',
-        placeholder: `请在此处输入教学目标，一行一条，重点条目前面用“*”（英文半角）标记。例如：
+        placeholder: `请在此处输入学习目标，一行一条，重点条目前面用“*”（英文半角）标记。例如：
 
         能够说出Angular一些常识（背景和特点）
         能够说出SPA是什么
@@ -87,7 +87,7 @@
         }
         this.$option.set('last_class_name', this.class_name)
         if (!this.targets) {
-          return this.$dialog.error('请输入教学目标')
+          return this.$dialog.error('请输入学习目标')
         }
         const stamp = this.$utils.getStamp()
         const className = this.class_name
