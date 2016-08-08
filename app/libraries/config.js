@@ -13,7 +13,8 @@ export default {
     path: app.getAppPath()
   },
   storage: {
-    root: path.resolve(app.getPath('userData'), 'data'), // ????
+    // root: path.resolve(app.getPath('userData'), 'data'), // ????
+    root: path.resolve(app.getAppPath(), '..', 'data'), // ????
     ext: '.dat',
     sign: `© ${new Date().getFullYear()} WEDN.NET`
   },
