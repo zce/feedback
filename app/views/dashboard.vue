@@ -28,11 +28,12 @@
 <template>
   <div class="inner">
     <img src="../assets/img/itcast.svg" alt="itcast">
-    <h1>Itcast, Inc. Feedback</h1>
+    <h1>Feedback</h1>
     <p>请点击左侧菜单中的创建，开始新的反馈统计</p>
     <ul>
       <li><a v-link="{ name: 'start' }" class="btn btn-warning btn-lg">开始创建新的反馈统计</a></li>
     </ul>
+    <p>Copyright (c) 2016 Itcast, Inc. All Rights Reserved.</p>
   </div>
 </template>
 
