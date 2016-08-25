@@ -1,4 +1,17 @@
 {
+  "name": "feedback",
+  "description": "A feedback system",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zce/feedback.git"
+  },
+  "author": "iceStone <ice@micua.com> (http://blog.wedn.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zce/feedback/issues"
+  },
+  "homepage": "https://github.com/zce/feedback#readme",
   "scripts": {
     "postinstall": "cd app && npm install && cd ..",
     "// ": "The original usage",
@@ -28,8 +41,7 @@
   "dependencies": {
     "vue": "^1.0.26",
     "vue-i18n": "^4.1.0",
-    "vue-router": "^0.7.13",
-    "vuex": "^1.0.0-rc.2"
+    "vue-router": "^0.7.13"
   },
   "devDependencies": {
     "babel-core": "^6.13.2",

@@ -1,8 +1,8 @@
 {
   "name": "feedback",
   "productName": "Feedback",
+  "description": "A feedback system for Itcast, Inc.",
   "version": "0.2.0",
-  "description": "A Feedback application for Itcast, Inc.",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "webpack"
   ],
   "author": "iceStone <ice@micua.com> (http://blog.wedn.net/)",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/zce/feedback/issues"
   },

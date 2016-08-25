@@ -20,7 +20,7 @@ export default {
   },
   server: {
     address: '',
-    port: 20800
+    port: 20810
   },
   status_keys: {
     initial: '尚未开始统计',

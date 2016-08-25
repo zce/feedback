@@ -1,6 +1,6 @@
 /*!
  * Feedback system
- *   https://zce.github.io/feedback
+ *   https://github.com/zce/feedback
  *
  * Date:
  *   2016-07-30T23:56:12.476Z

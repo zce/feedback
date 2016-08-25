@@ -44,5 +44,11 @@
     "chromium": "Chromium",
     "electron": "Electron",
     "datetime": "Datetime"
+  },
+  "dashboard": {
+    "intro": "点击左侧菜单中的开始创建，开始新的学习目标反馈统计",
+    "start": "开始新的反馈统计",
+    "copyright": "版权所有 (c) 2016 传智播客，保留一切权利",
+    "//": "Copyright (c) 2016 Itcast, Inc. All Rights Reserved."
   }
 }

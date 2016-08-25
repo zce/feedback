@@ -37,7 +37,8 @@
   ::-webkit-input-placeholder{
     // display: block;
     // content: "line@ \A line#";/*  \A 表示换行  */
-    color: #c5c5c5;
+    color: #666;
+    font-weight: 100
   }
 </style>
 
@@ -61,7 +62,7 @@
 <script>
   export default {
     ready () {
-      this.$root.title = '创建新的反馈统计'
+      this.$root.title = '创建新的学习目标反馈统计'
     },
 
     data () {
@@ -72,7 +73,7 @@
 
         能够说出Angular一些常识（背景和特点）
         能够说出SPA是什么
-        能够说出Angular的核心特性
+        *能够说出Angular的核心特性
         能够运用Angular基本指令
         能够运用Angular表达式
         能够运用Angular模块的创建及使用
