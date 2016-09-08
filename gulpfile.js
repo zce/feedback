@@ -1,25 +1,31 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
+// require core packages
 const fs = require('fs')
 const path = require('path')
 const crypto = require('crypto')
 const { exec, spawn } = require('child_process')
 
+// require third party packages
 const gulp = require('gulp')
 const gulpLoadPlugins = require('gulp-load-plugins')
 const Promise = require('bluebird')
 const del = require('del')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
+const Dashboard = require('webpack-dashboard')
+const DashboardPlugin = require('webpack-dashboard/plugin')
 const electron = require('electron-prebuilt')
 const packager = require('electron-packager')
 const { createPackage } = require('asar')
 
+// require all of config
 const webpackConfigMain = require('./tasks/webpack.config.main')
 const webpackConfigRenderer = require('./tasks/webpack.config.renderer')
 const packagerConfig = require('./tasks/packager.config')
 const updaterConfig = require('./tasks/updater.config')
 
+// load all of plugins
 const plugins = gulpLoadPlugins()
 
 // ======================================================
@@ -27,66 +33,66 @@ const plugins = gulpLoadPlugins()
 // ======================================================
 
 /**
- * Get the stamp of file
- * @param  {String} filename file path
- * @param  {String} type     sha1|md5
- * @return {String}          stamp
+ * Get the hash of file
+ * @param  {String} filename Filepath
+ * @param  {String} type     sha1/md5
+ * @return {String}          hash
  */
-const getFileStamp = (filename, type) => {
-  type = type || 'sha1'
-  const buffer = fs.readFileSync(filename)
-  var hash = crypto.createHash(type)
-  hash.update(buffer)
-  return hash.digest('hex')
-}
+const getFileHash = (filename, type = 'sha1') => crypto.createHash(type).update(fs.readFileSync(filename)).digest('hex')
 
 /**
  * Archive each item in a temporary folder
- * @param  {Function} callback Done callback
- * @param  {Boolean}   prune   Remove develop denpendencies
+ * @param  {Function}  callback Next task
+ * @param  {Boolean}   prune    Remove develop denpendencies
  */
 const archive = (callback, prune) => {
   const tempDir = path.resolve(__dirname, 'temp')
   const buildDir = path.resolve(__dirname, 'build')
-  const targets = fs.readdirSync(tempDir)
-    .filter(item => fs.statSync(path.resolve(tempDir, item)).isDirectory())
-  const asarArchive = (item) => new Promise(resolve => {
-    const itempath = path.resolve(tempDir, item)
-    const pack = () => createPackage(itempath, path.resolve(buildDir, item + '.asar'), () => {
+  Promise.all(fs.readdirSync(tempDir).filter(item => fs.statSync(path.resolve(tempDir, item)).isDirectory()).map(item => new Promise(resolve => {
+    const itemPath = path.resolve(tempDir, item)
+    const pack = () => createPackage(itemPath, path.resolve(buildDir, item + '.asar'), () => {
       plugins.util.log('[archive]', `pack ${item} done...`)
       resolve()
     })
     if (!prune) return pack()
-    exec('npm prune --production', { cwd: itempath }).on('close', pack)
-  })
-  Promise.all(targets.map(item => asarArchive(item))).then(() => callback())
+    exec('npm prune --production', { cwd: itemPath }).on('close', pack)
+  }))).then(() => callback())
 }
 
+/**
+ * Start a webpack develop server for hot replace
+ * @param  {Function} callback Next task
+ */
 const watch = (callback) => {
+  // hot module replace
   webpackConfigRenderer.entry.renderer.unshift(
     'webpack-dev-server/client?http://localhost:2080/',
     'webpack/hot/dev-server'
   )
   webpackConfigRenderer.plugins.push(new webpack.HotModuleReplacementPlugin())
-  new WebpackDevServer(webpack(webpackConfigRenderer), {
+  // webpack dashboard console
+  if (typeof callback !== 'function') {
+    const dashboard = new Dashboard()
+    webpackConfigRenderer.plugins.push(new DashboardPlugin(dashboard.setData))
+  }
+  // webpack dev server
+  const server = new WebpackDevServer(webpack(webpackConfigRenderer), {
     hot: true,
-    // watchOptions: {
-    //   aggregateTimeout: 300,
-    //   poll: 1000 // is this the same as specifying --watch-poll?
-    // },
-    stats: {
-      colors: true
-    }
-  }).listen(2080, 'localhost', (error) => {
+    quiet: true, // no default console
+    stats: { colors: true }
+  })
+  server.listen(2080, 'localhost', error => {
     if (error) throw new plugins.util.PluginError('watch', error)
     plugins.util.log('[watch]', 'http://localhost:2080/webpack-dev-server/index.html')
     // keep the server alive or continue?
-    callback && callback()
+    typeof callback === 'function' && callback()
   })
 }
 
 /**
- * Boot build folder
+ * Boot build folder as electron app
+ * @param  {Function} callback Next task
+ * @param  {Boolean}  prune    Prune
  */
 const boot = (callback, prune) => archive(
   () => spawn(electron, ['build'])
@@ -112,7 +118,7 @@ gulp.task('lint', () => {
 /**
  * Clean temp files
  */
-gulp.task('clean', [], del.bind(this, ['build/*.asar', 'data', 'temp']))
+gulp.task('clean', [], del.bind(this, ['build/*.asar', 'data', 'temp', '*.log']))
 
 /**
  * Clean node_modules
@@ -163,7 +169,7 @@ gulp.task('dist', ['archive'], () => {
   fs.existsSync('./dist/latest') || fs.mkdir('./dist/latest')
   return gulp.src('./build/*.asar')
     .pipe(plugins.rename({ extname: '' }))
-    .pipe(plugins.gzip({ gzipOptions: { level: 9 } }))
+    .pipe(plugins.gzip({ gzipOptions: { level: 1 } }))
     .pipe(plugins.rename(p => {
       const pkg = require(`./temp/${p.basename}/package.json`)
       const name = `${p.basename}-${pkg.version}`
@@ -173,8 +179,8 @@ gulp.task('dist', ['archive'], () => {
         notes: pkg.description,
         updated: pkg.updated,
         version: pkg.version,
-        sha1: getFileStamp(`./build/${p.basename}.asar`, 'sha1'),
-        md5: getFileStamp(`./build/${p.basename}.asar`, 'md5')
+        sha1: getFileHash(`./build/${p.basename}.asar`, 'sha1'),
+        md5: getFileHash(`./build/${p.basename}.asar`, 'md5')
       }, null, 2), 'utf8')
       p.basename = `${name}`
       p.extname = '.gz'

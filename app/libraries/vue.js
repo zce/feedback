@@ -1,27 +1,28 @@
+import path from 'path'
 import electron from 'electron'
 import config from './config'
-import option from './option'
+import * as option from './option'
 import * as utils from './utils'
 import * as storage from './storage'
 import * as server from './server'
+import { renderer as logger } from './logger'
 
 import './menu'
 import './extlink'
 
-const dialog = electron.remote.dialog
-const BrowserWindow = electron.remote.BrowserWindow
-const data = window.require('data.asar')
+const { dialog, BrowserWindow } = electron
 
 export default function Plugin () { }
 
 Plugin.install = function (Vue, options) {
   Vue.prototype.$electron = electron
   Vue.prototype.$config = config
-  Vue.prototype.$db = data
   Vue.prototype.$option = option
+  Vue.prototype.$logger = logger
   Vue.prototype.$utils = utils
   Vue.prototype.$storage = storage
   Vue.prototype.$server = server
+  Vue.prototype.$db = global.require(path.resolve(config.app.path, 'data.asar'))
   Vue.prototype.$dialog = {
     info: (title, content) => {
       content = content || title
@@ -44,6 +45,7 @@ Plugin.install = function (Vue, options) {
       dialog.showErrorBox(title, content)
     }
   }
+
   Vue.filter('toFixed', (value, length) => parseFloat(value).toFixed(length || 2))
   Vue.config.lang = option.get('lang', 'zh-CN')
 }

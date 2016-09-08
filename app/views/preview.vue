@@ -82,6 +82,9 @@
   import XTemplate from 'xtemplate'
 
   export default {
+    name: 'preview',
+    pathname: '/preview/:item',
+
     data () {
       return { item: this.loadData(this.$route.params.item) }
     },

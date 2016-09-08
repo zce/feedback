@@ -1,6 +1,6 @@
 # Feedback
 
-A feedback system for Itcast, Inc.
+A feedback system.
 
 [![Build Status](https://travis-ci.org/zce/feedback.svg?branch=master)](https://travis-ci.org/zce/feedback)
 [![Dependency Status](https://david-dm.org/zce/feedback.svg)](https://david-dm.org/zce/feedback)

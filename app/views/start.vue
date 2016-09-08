@@ -61,6 +61,9 @@
 
 <script>
   export default {
+    name: 'start',
+    pathname: '/start',
+
     ready () {
       this.$root.title = '创建新的学习目标反馈统计'
     },

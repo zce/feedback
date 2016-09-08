@@ -101,6 +101,9 @@
 
 <script>
   export default {
+    name: 'watch',
+    pathname: '/watch/:item',
+
     data () {
       // const stamp = this.$route.params.item
       // this.$storage.watch(stamp, () => this.loadData(stamp))
