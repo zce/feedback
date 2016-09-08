@@ -2,17 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>{{item.class_name}}-{{item.datetime}} 反馈报告</title>
+  <title>【每日反馈】{{item.class_name}}-{{item.date}}</title>
+  <style>
+    body {
+      margin: 20px 100px;
+    }
+  </style>
   <style type="text/css">h1,h2,h3,h4,h5,h6{margin-top:1em;margin-bottom:16px;font-weight:bold;line-height:1.4}h1{padding-bottom:.3em;font-size:2.25em;line-height:1.2;border-bottom:1px solid #eee}h2{padding-bottom:.3em;font-size:1.75em;line-height:1.225;border-bottom:1px solid #eee}h3{font-size:1.5em;line-height:1.43}h4{font-size:1.25em}h5{font-size:1em}h6{font-size:1em;color:#777}p{margin-top:0;margin-bottom:10px}table{width:100%;border-collapse:collapse}thead{background-color:#f5f5f5}thead th,thead td{padding:15px}th{font-weight:500}th,td{border:1px solid #e1e1e1;padding:5px}</style>
 </head>
 <body>
-  <h1>{{item.class_name}}-{{item.datetime}} 反馈报告</h1>
+  <h1>【每日反馈】{{item.class_name}}-{{item.date}}</h1>
   <br>
-  <h2>
-    <span>今日整体吸收率：<em{{#if(absorptivity>=85)}} style="color:rgba(92, 184, 92, 0.7)"{{elseif(absorptivity>=70)}} style="color:rgba(91, 192, 222, 0.7)"{{elseif(absorptivity>=60)}} style="color:rgba(240, 173, 78, 0.7)"{{else}} style="color:#f40"{{/if}}>{{absorptivity.toFixed(2)}}%</em></span>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <span>反馈人数：<em>{{item.receives_count}}人</em></span>
-  </h2>
+  <h2>基本信息</h2>
+  <table>
+    <thead>
+      <tr>
+        <th width="300" colspan="2">项目</th>
+        <th>数据</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="font-size:30px;line-height:2">
+        <td colspan="2">今日整体吸收率：</td>
+        <td>&nbsp;&nbsp;<em{{#if(absorptivity>=85)}} style="color:rgba(92, 184, 92, 0.7)"{{elseif(absorptivity>=70)}} style="color:rgba(91, 192, 222, 0.7)"{{elseif(absorptivity>=60)}} style="color:rgba(240, 173, 78, 0.7)"{{else}} style="color:#f40"{{/if}}>{{absorptivity.toFixed(2)}}%</em></td>
+      </tr>
+      <tr>
+        <td width="120" rowspan="4" align="center">班级信息：</td>
+        <td width="160" align="center">班级名称：</td>
+        <td>{{item.class_name}}</td>
+      </tr>
+      <tr>
+        <td align="center">班级人数：</td>
+        <td>{{item.class_count}}人</td>
+      </tr>
+      <tr>
+        <td align="center">出勤人数：</td>
+        <td>{{item.attendance}}人</td>
+      </tr>
+      <tr>
+        <td align="center">反馈人数：</td>
+        <td style="background-color: #ffe000; color: #fff;">{{item.receives_count}}人</td>
+      </tr>
+      <tr>
+        <td rowspan="2" align="center">教学进度：</td>
+        <td align="center">授课日期：</td>
+        <td>{{item.date}}</td>
+      </tr>
+      <tr>
+        <td align="center">教学内容：</td>
+        <td>{{item.course}}</td>
+      </tr>
+      <tr>
+        <td rowspan="3" align="center">工作人员：</td>
+        <td align="center">讲师姓名：</td>
+        <td>{{item.teacher}}</td>
+      </tr>
+      <tr>
+        <td align="center">助教姓名：</td>
+        <td>{{item.assistant}}</td>
+      </tr>
+      <tr>
+        <td align="center">班主任姓名：</td>
+        <td>{{item.head}}</td>
+      </tr>
+    </tbody>
+  </table>
   <br><br>
   <h2>学习目标吸收情况统计</h2>
   <table>
@@ -25,7 +79,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr style="background-color: rgba(0, 255, 20, 0.1)">
+      <tr style="background-color: rgba(0, 255, 20, 0.1); font-size: 20px; line-height: 2;">
         <td align="center">综合结果：</td>
         {{#each(answer_options)~}}
         {{ set (tmp = percent[xindex].total / percent[xindex].count) }}

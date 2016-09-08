@@ -7,9 +7,10 @@
       flex: 1;
     }
     label {
-      font-size: 16/16rem;
+      font-size: 18/16rem;
       font-weight: 600;
       margin-bottom: 0/16rem;
+      margin-left: 2/16rem;
     }
     textarea, input {
       flex: 1;
@@ -38,7 +39,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="class_name">反馈班级</label>
+          <label for="class_name">班级名称</label>
           <input id="class_name" type="text" v-model="class_name | trim" placeholder="分校名+品牌+学科名+班级类型+期数（时间+授课模式）" autofocus>
         </div>
       </div>
@@ -51,13 +52,13 @@
       <div class="col-md-2">
         <div class="form-group">
           <label for="class_count">班级人数</label>
-          <input id="class_count" type="text" v-model="class_count" placeholder="班级人数">
+          <input id="class_count" type="number" v-model="class_count" placeholder="班级人数" min="1" max="160">
         </div>
       </div>
       <div class="col-md-2">
         <div class="form-group">
           <label for="attendance">出勤人数</label>
-          <input id="attendance" type="text" v-model="attendance" placeholder="出勤人数">
+          <input id="attendance" type="number" v-model="attendance" placeholder="出勤人数" min="1" max="160">
         </div>
       </div>
     </div>
@@ -108,8 +109,7 @@
       return {
         class_name: this.$option.get('remembers.last_class_name'),
         class_count: this.$option.get('remembers.last_class_count', 0),
-        attendance: 0,
-        receives_count: 0,
+        attendance: this.$option.get('remembers.last_attendance', 0),
         date: this.$utils.formatDate(new Date(), 'yyyy年MM月dd日'),
         course: this.$option.get('remembers.last_course'),
         teacher: this.$option.get('remembers.last_teacher'),
@@ -134,7 +134,7 @@
         if (!this.$config.class_format.test(this.class_name)) {
           return this.$dialog.error('请输入正确格式的班级名称')
         }
-        if (!(this.class_count && this.date && this.course && this.teacher && this.assistant && this.head)) {
+        if (!(this.class_count && this.attendance && this.date && this.course && this.teacher && this.assistant && this.head)) {
           return this.$dialog.error('请完整填写基本信息')
         }
         if (!this.targets) {
@@ -144,6 +144,7 @@
         // Remember
         this.$option.set('remembers.last_class_name', this.class_name)
         this.$option.set('remembers.last_class_count', this.class_count)
+        this.$option.set('remembers.last_attendance', this.attendance)
         this.$option.set('remembers.last_course', this.course)
         this.$option.set('remembers.last_teacher', this.teacher)
         this.$option.set('remembers.last_assistant', this.assistant)
@@ -152,8 +153,14 @@
         const stamp = this.$utils.getStamp()
         this.$storage.set(stamp, {
           stamp: stamp,
-          date: this.$utils.formatDate(new Date(), 'yyyy年MM月dd日'),
           class_name: this.class_name,
+          class_count: this.class_count,
+          assistant: this.assistant,
+          course: this.course,
+          teacher: this.teacher,
+          head: this.head,
+          attendance: this.attendance,
+          date: this.$utils.formatDate(new Date(), 'yyyy年MM月dd日'),
           targets: this.targets.split('\n').map(t => t.trim()).filter(t => t).map(t => ({ question: t, highlight: t.startsWith('*') })),
           receives: {},
           receives_count: 0,

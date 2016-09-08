@@ -4,37 +4,36 @@
     flex: 1;
     flex-direction: column;
     height: 100%;
-
     thead, tbody {
       display: flex;
       flex-direction: column;
     }
-
     tbody {
       flex: 1;
     }
-
     tr {
       display: flex;
-
       th, td {
         flex: 1;
-
         &:not(:last-child) {
           width: 15%;
           flex: initial;
         }
+        span {
+          min-width: 300/16rem;
+          display: inline-block;
+          // .primary {
+          //   color: #f40;
+          // }
+        }
       }
     }
   }
-
   .target {
     flex: 1;
-
-    div {
+    .select {
       height: 100%;
       overflow-y: auto;
-
       ol {
         margin: 1em 0;
         padding-left: 2em;
@@ -60,8 +59,26 @@
       </thead>
       <tbody>
         <tr>
-          <td>反馈班级</td>
-          <td>{{item.class_name}}</td>
+          <td>班级信息</td>
+          <td>
+            <span class="select">{{item.class_name}}</span>
+            <span>班级人数：{{item.class_count}}（实到：{{item.attendance}}）</span>
+          </td>
+        </tr>
+        <tr>
+          <td>教学进度</td>
+          <td>
+            <span>授课日期：{{item.date}}</span>
+            <span>教学内容：{{item.course}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>工作人员</td>
+          <td>
+            <span>班主任：{{item.head}}</span>
+            <span>助教：{{item.assistant}}</span>
+            <span>讲师：{{item.teacher}}</span>
+          </td>
         </tr>
         <tr class="target">
           <td>学习目标</td>
@@ -75,7 +92,7 @@
         </tr>
         <tr>
           <td>已完成测评人数</td>
-          <td style="color:#f40">{{item.receives_count}}人</td>
+          <td style="color:#f30">{{item.receives_count}}人（{{item.attendance - item.receives_count >= 0 ? '还少' : '超出'}}：{{item.attendance - item.receives_count}}）</td>
         </tr>
         <tr v-if="item.status">
           <td>反馈状态</td>
@@ -85,7 +102,7 @@
           <td>测评链接</td>
           <td>
             <a class="js-external-link" href="{{server_link + item.stamp}}">{{server_link + item.stamp}}</a>
-            <span>&nbsp;&nbsp;</span>
+            <i>&nbsp;&nbsp;</i>
             <a @click="copy(server_link + item.stamp)">点击复制</a>
           </td>
         </tr>

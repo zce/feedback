@@ -35,7 +35,7 @@
 
 <template>
   <div>
-    <h1 class="page-header">{{item.datetime}} 反馈报告预览（{{getAbsorptivity() | toFixed}}%）</h1>
+    <h1 class="page-header">{{item.date}} 反馈报告预览（{{getAbsorptivity() | toFixed}}%）</h1>
     <table>
       <thead>
         <tr>
@@ -63,7 +63,7 @@
           <td>{{item.note}}</td>
         </tr>
         <tr><td></td></tr>
-        <tr>
+        <tr style="background-color: #f90; color: #fff">
           <td style="flex: initial; font-weight: bold">反馈人数：</td>
           <td>{{item.receives_count}}人</td>
         </tr>
@@ -158,12 +158,12 @@
           answer_options: this.$config.answer_options
         })
         this.$electron.remote.dialog.showSaveDialog({
-          title: `保存${this.item.datetime}详细报告`,
+          title: `保存${this.item.date}详细报告`,
           filters: [
             { name: 'HTML', extensions: ['html'] },
             { name: 'All Files', extensions: ['*'] }
           ],
-          defaultPath: path.join(this.$electron.remote.app.getPath('desktop'), `${this.item.class_name}-${this.item.datetime.replace(/(:|\/|\\|\s)/g, '-')}.htm`)
+          defaultPath: path.join(this.$electron.remote.app.getPath('desktop'), `【每日反馈】${this.item.class_name}-${this.item.date}.htm`)
         }, filename => {
           if (!filename) return
           fs.writeFile(filename, html, 'utf8', () => this.$electron.shell.showItemInFolder(filename))

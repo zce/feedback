@@ -21,7 +21,7 @@
       <div class="meta row">
         <div class="col-md-6"><span>姓名：</span><input id="name" type="text" name="name" placeholder="请输入你的姓名（必填）" autocomplete="off"></div>
         <div class="col-md-5"></div>
-        <div class="col-md-4"><span>评估时间：</span><strong>{{ datetime }}</strong></div>
+        <div class="col-md-4"><span>评估时间：</span><strong>{{ date }}</strong></div>
       </div>
       <ol id="targets" class="questions">
         {{#each(targets)}}
