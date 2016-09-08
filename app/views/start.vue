@@ -71,7 +71,7 @@
       <div class="col-md-2">
         <div class="form-group">
           <label for="date">授课日期</label>
-          <input id="date" type="text" v-model="date | trim" placeholder="今天的授课日期" readonly>
+          <input id="date" type="text" v-model="date | trim" placeholder="今天的授课日期" readonly tabindex="-1">
         </div>
       </div>
       <div class="col-md-2">
