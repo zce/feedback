@@ -5,13 +5,10 @@
   }
   img {
     width: 265px;
+    transition: transform .5s ease-in-out;
   }
   .rotate {
-    transition: transform .5s ease-in-out;
-    transform: rotate(720deg);
-  }
-  .rotate:hover {
-    transform: rotate(720deg);
+    transform: rotate(760deg);
   }
   p {
     line-height: 24px;
