@@ -10,7 +10,7 @@ import { renderer as logger } from './logger'
 import './menu'
 import './extlink'
 
-const { dialog, BrowserWindow } = electron
+const { dialog, BrowserWindow } = electron.remote
 
 export default function Plugin () { }
 
@@ -47,5 +47,6 @@ Plugin.install = function (Vue, options) {
   }
 
   Vue.filter('toFixed', (value, length) => parseFloat(value).toFixed(length || 2))
+  Vue.filter('trim', { read: v => v && v.trim(), write: v => v && v.trim() })
   Vue.config.lang = option.get('lang', 'zh-CN')
 }

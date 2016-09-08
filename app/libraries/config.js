@@ -17,9 +17,10 @@ config.app = {
 
 // storage config
 config.storage = {
+  meta: { type: pkg.name, version: pkg.version },
+  sign: `© ${new Date().getFullYear()} WEDN.NET`,
   root: path.resolve(config.app.path, '..', 'data'),
-  ext: '.dat',
-  sign: `© ${new Date().getFullYear()} WEDN.NET`
+  ext: '.dat'
 }
 
 // log4js appender config
@@ -52,6 +53,7 @@ config.answer_options = {
 }
 
 export default Object.assign(config, {
+  class_format: /^.+?(传智|黑马).+?(基础|就业)\d{1,5}期（\d{8}(面授|双元)）\s?$/,
   allow_admin_rating: true,
   allow_student_repeat: false,
   stamp_length: 8

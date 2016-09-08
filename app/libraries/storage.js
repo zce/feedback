@@ -31,6 +31,7 @@ function read (uri) {
 }
 
 export function set (stamp, value) {
+  value.meta = config.storage.meta
   write(path.join(config.storage.root, stamp + config.storage.ext), value)
 }
 
@@ -57,7 +58,5 @@ export function getList () {
 }
 
 export function watchList (callback) {
-  fs.watch(config.storage.root, { interval: 400 }, (event, filename) => {
-    event !== 'change' && callback()
-  })
+  fs.watch(config.storage.root, { interval: 400 }, e => e !== 'change' && callback())
 }
