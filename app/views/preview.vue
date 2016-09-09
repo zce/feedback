@@ -109,7 +109,6 @@
             this.temp[i].push(marks[i])
           })
         })
-        console.log(this.temp)
         this.percent = {}
         item.targets.forEach((t, i) => Object.keys(this.$config.answer_options).forEach((k, j) => this.percentage(i, j)))
         return item
@@ -126,6 +125,12 @@
         }
       },
 
+      /**
+       * [percentage description]
+       * @param  {number} index 题目序号
+       * @param  {[type]} score [description]
+       * @return {[type]}       [description]
+       */
       percentage (index, score) {
         const item = this.temp[index]
         const res = (item.filter(i => i === score).length / item.length * 100)
