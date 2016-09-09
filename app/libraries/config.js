@@ -46,10 +46,10 @@ config.status_keys = {
 
 // answeroptions
 config.answer_options = {
-  0: { short: 'A', full: '非常清楚', ratio: 1.0, color: '#F48FB1' },
-  1: { short: 'B', full: '基本清楚', ratio: 0.8, color: '#EF9A9A' },
-  2: { short: 'C', full: '有点模糊', ratio: 0.5, color: '#80DEEA' },
-  3: { short: 'D', full: '几乎不懂', ratio: 0.1, color: '#81D4FA' }
+  0: { short: 'A', full: '非常清楚', ratio: 1.0, color: '#5cb85c' },
+  1: { short: 'B', full: '基本清楚', ratio: 0.8, color: '#5bc0de' },
+  2: { short: 'C', full: '有点模糊', ratio: 0.5, color: '#f0ad4e' },
+  3: { short: 'D', full: '几乎不懂', ratio: 0.1, color: '#d9534f' }
 }
 
 export default Object.assign(config, {

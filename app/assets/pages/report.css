@@ -98,27 +98,33 @@ th {
 }
 
 .default {
-  background-color: #fff; /* #ccc */
+  background-color: #ffffff;
+  /* #ccc */
   color: #373A3E;
 }
 .primary {
-  background-color: #0275d8; /* #0275d8 */
+  background-color: #43a7fd;
+  /* #0275d8 */
   color: #fff;
 }
 .success {
-  background-color: #5cb85c; /* #5cb85c */
+  background-color: #a3d7a3;
+  /* #5cb85c */
   color: #fff;
 }
 .info {
-  background-color: #5bc0de; /* #5bc0de */
+  background-color: #b0e1ef;
+  /* #5bc0de */
   color: #fff;
 }
 .warning {
-  background-color: #f0ad4e; /* #f0ad4e */
+  background-color: #f8d9ac;
+  /* #f0ad4e */
   color: #fff;
 }
 .danger {
-  background-color: #d9534f; /* #d9534f */
+  background-color: #eba5a3;
+  /* #d9534f */
   color: #fff;
 }
 
