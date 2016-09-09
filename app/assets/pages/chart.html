@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chart JS Demo</title>
+</head>
+<body>
+  <canvas id="main"></canvas>
+  <script src="Chart.min.js"></script>
+  <script>
+  var ctx = document.getElementById('main');
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['非常清楚', '基本清楚', '有点模糊', '几乎不懂'],
+      datasets: [
+        {
+          label: '综合结果',
+          data: [60.71, 23.57, 4.29, 11.43],
+          backgroundColor: ['#F48FB1', '#EF9A9A', '#80DEEA', '#81D4FA']
+        }
+      ]
+    }
+  });
+  </script>
+
+</body>
+</html>
