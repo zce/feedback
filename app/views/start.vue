@@ -7,7 +7,8 @@
       flex: 1;
     }
     label {
-      font-size: 18/16rem;
+      color: #888;
+      font-size: 16/16rem;
       font-weight: 600;
       margin-bottom: 0/16rem;
       margin-left: 2/16rem;
@@ -28,7 +29,7 @@
   ::-webkit-input-placeholder{
     // display: block;
     // content: "line@ \A line#";/*  \A 表示换行  */
-    color: #666;
+    color: #999;
     font-weight: 100
   }
 </style>
