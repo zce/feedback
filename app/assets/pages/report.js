@@ -50,15 +50,19 @@
     e.appendChild(td)
     new Chart(canvas, {
       type: 'pie',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: label,
-            data: data,
-            backgroundColor: backgroundColor
-          }]
-        },
-        options: { responsive: false, maintainAspectRatio: true }
-      })
+      data: {
+        labels: labels,
+        datasets: [{
+          label: label,
+          data: data,
+          backgroundColor: backgroundColor
+        }]
+      },
+      options: { responsive: false, maintainAspectRatio: true, animation: false }
     })
+    var img = document.createElement('img')
+    img.src = canvas.toDataURL()
+    canvas.remove()
+    td.appendChild(img)
+  })
 }(this))
