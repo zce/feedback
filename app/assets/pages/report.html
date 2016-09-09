@@ -11,7 +11,7 @@
 <body>
   <h1>2016年09月09日 - 反馈报告</h1>
   <!-- 基本信息 -->
-  <table class="nowrap">
+  <table id="meta" class="nowrap">
     <caption><h2>反馈基本信息</h2></caption>
     <thead>
       <tr>
@@ -67,79 +67,79 @@
   </table>
   <!-- /基本信息 -->
   <!-- 学习目标吸收情况统计 -->
-  <table class="nowrap">
+  <table id="statistics" class="nowrap">
     <caption><h2>学习目标吸收情况统计</h2></caption>
     <thead>
       <tr>
         <th>学习目标</th>
-        <th width="90">A. 非常清楚</th>
-        <th width="90">B. 基本清楚</th>
-        <th width="90">C. 有点模糊</th>
-        <th width="90">D. 几乎不懂</th>
+        <th width="90">非常清楚</th>
+        <th width="90">基本清楚</th>
+        <th width="90">有点模糊</th>
+        <th width="90">几乎不懂</th>
       </tr>
     </thead>
     <tbody>
       <tr class="success">
         <td align="center">综合结果</td>
-        <td>60.71%</td>
-        <td>23.57%</td>
-        <td>4.29%</td>
-        <td>11.43%</td>
+        <td align="center">60.71%</td>
+        <td align="center">23.57%</td>
+        <td align="center">4.29%</td>
+        <td align="center">11.43%</td>
       </tr>
       <tr class="default">
         <td>能够说出Angular一些常识（背景和特点）</td>
-        <td>0.00%</td>
-        <td>65.00%</td>
-        <td>10.00%</td>
-        <td>25.00%</td>
+        <td align="center">0.00%</td>
+        <td align="center">65.00%</td>
+        <td align="center">10.00%</td>
+        <td align="center">25.00%</td>
       </tr>
       <tr class="default">
         <td>能够说出SPA是什么</td>
-        <td>65.00%</td>
-        <td>15.00%</td>
-        <td>0.00%</td>
-        <td>20.00%</td>
+        <td align="center">65.00%</td>
+        <td align="center">15.00%</td>
+        <td align="center">0.00%</td>
+        <td align="center">20.00%</td>
       </tr>
       <tr class="info">
         <td>*能够说出Angular的核心特性</td>
-        <td>65.00%</td>
-        <td>25.00%</td>
-        <td>0.00%</td>
-        <td>10.00%</td>
+        <td align="center">65.00%</td>
+        <td align="center">25.00%</td>
+        <td align="center">0.00%</td>
+        <td align="center">10.00%</td>
       </tr>
       <tr class="default">
         <td>能够运用Angular基本指令</td>
-        <td>65.00%</td>
-        <td>30.00%</td>
-        <td>5.00%</td>
-        <td>0.00%</td>
+        <td align="center">65.00%</td>
+        <td align="center">30.00%</td>
+        <td align="center">5.00%</td>
+        <td align="center">0.00%</td>
       </tr>
       <tr class="default">
         <td>能够运用Angular表达式</td>
-        <td>65.00%</td>
-        <td>20.00%</td>
-        <td>15.00%</td>
-        <td>0.00%</td>
+        <td align="center">65.00%</td>
+        <td align="center">20.00%</td>
+        <td align="center">15.00%</td>
+        <td align="center">0.00%</td>
       </tr>
       <tr class="default">
         <td>能够运用Angular模块的创建及使用</td>
-        <td>75.00%</td>
-        <td>10.00%</td>
-        <td>0.00%</td>
-        <td>15.00%</td>
+        <td align="center">75.00%</td>
+        <td align="center">10.00%</td>
+        <td align="center">0.00%</td>
+        <td align="center">15.00%</td>
       </tr>
       <tr class="default">
         <td>能运用Angular控制器的创建及使用</td>
-        <td>90.00%</td>
-        <td>0.00%</td>
-        <td>0.00%</td>
-        <td>10.00%</td>
+        <td align="center">90.00%</td>
+        <td align="center">0.00%</td>
+        <td align="center">0.00%</td>
+        <td align="center">10.00%</td>
       </tr>
     </tbody>
   </table>
   <!-- /学习目标吸收情况统计 -->
   <!-- 学员意见或建议 -->
-  <table>
+  <table id="suggestion">
     <caption><h2>学员意见或建议</h2></caption>
     <thead>
       <tr>
@@ -232,7 +232,7 @@
   </table>
   <!-- /学员意见或建议 -->
   <!-- 统计原始数据 -->
-  <table class="nowrap">
+  <table id="row" class="nowrap">
     <caption><h2>统计原始数据</h2></caption>
     <thead>
       <tr>
@@ -450,6 +450,8 @@
     </tbody>
   </table>
   <!-- /统计原始数据 -->
+  <script src="echarts.simple.min.js"></script>
+  <script src="report.js"></script>
 </body>
 
 </html>

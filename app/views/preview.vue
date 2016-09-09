@@ -118,13 +118,13 @@
 
       style (pc) {
         // const pc = this.percentage(index, score)
-        if (pc >= 75) {
-          return { 'color': '#fff', 'background-color': 'rgba(92, 184, 92, 0.7)' }
-        } else if (pc >= 50) {
-          return { 'color': '#fff', 'background-color': 'rgba(91, 192, 222, 0.7)' }
-        } else if (pc >= 25) {
-          return { 'color': '#fff', 'background-color': 'rgba(240, 173, 78, 0.7)' }
-        }
+        // if (pc >= 75) {
+        //   return { 'color': '#fff', 'background-color': 'rgba(92, 184, 92, 0.7)' }
+        // } else if (pc >= 50) {
+        //   return { 'color': '#fff', 'background-color': 'rgba(91, 192, 222, 0.7)' }
+        // } else if (pc >= 25) {
+        //   return { 'color': '#fff', 'background-color': 'rgba(240, 173, 78, 0.7)' }
+        // }
       },
 
       percentage (index, score) {

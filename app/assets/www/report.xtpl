@@ -147,9 +147,9 @@
 </head>
 
 <body>
-  <h1>【每日反馈】{{item.class_name}}-{{item.date}}</h1>
+  <h1>{{item.date}} - 反馈报告</h1>
   <!-- 基本信息 -->
-  <table class="nowrap">
+  <table id="meta" class="nowrap">
     <caption><h2>反馈基本信息</h2></caption>
     <thead>
       <tr>
@@ -205,7 +205,7 @@
   </table>
   <!-- /基本信息 -->
   <!-- 学习目标吸收情况统计 -->
-  <table class="nowrap">
+  <table id="statistics" class="nowrap">
     <caption><h2>学习目标吸收情况统计</h2></caption>
     <thead>
       <tr>
@@ -220,21 +220,21 @@
         <td align="center">综合结果</td>
         {{#each(answer_options)~}}
         {{set(tmp = percent[xindex].total/percent[xindex].count)}}
-        <td>{{tmp.toFixed(2)}}%</td>
+        <td align="center">{{tmp.toFixed(2)}}%</td>
         {{~/each}}
       </tr>
       {{#each(item.targets)~}}
       <tr class="{{this.highlight ? 'info': 'default'}}">
         <td>{{this.question}}</td>
         {{#each(answer_options)~}}
-        <td>{{percent[xindex][../xindex].toFixed(2)}}%</td>
+        <td align="center">{{percent[xindex][../xindex].toFixed(2)}}%</td>
         {{~/each}}
       </tr>
       {{~/each}}
     </tbody>
   </table>
   <!-- 学员意见或建议 -->
-  <table>
+  <table id="suggestion">
     <caption><h2>学员意见或建议</h2></caption>
     <thead>
       <tr>
@@ -255,7 +255,7 @@
   </table>
   <!-- /学员意见或建议 -->
   <!-- 统计原始数据 -->
-  <table class="nowrap">
+  <table id="row" class="nowrap">
     <caption><h2>统计原始数据</h2></caption>
     <thead>
       <tr>

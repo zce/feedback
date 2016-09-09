@@ -29,7 +29,7 @@
           <h6{{#if(this.highlight)}} style="color: #f40"{{/if}}>{{ this.question }}{{#if(this.highlight)}}（重点）{{/if}}</h6>
           <div class="row">
             {{#each(answer_options, 'option', 'i')}}
-            <label class="col-md-3"><input type="radio" name="{{../xindex}}" value="{{i}}">{{option.full}}</label>
+            <label class="col-md-3"><input type="radio" name="{{../xindex}}" value="{{i}}">{{option.short}}. {{option.full}}</label>
             {{/each}}
           </div>
         </li>
