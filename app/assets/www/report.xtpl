@@ -160,7 +160,7 @@
     <tbody>
       <tr class="danger">
         <td colspan="2" align="center">主观调查综合得分</td>
-        <td>&nbsp;&nbsp;<em{{#if(absorptivity>=85)}} style="color:rgba(92, 184, 92, 0.7)"{{elseif(absorptivity>=70)}} style="color:rgba(91, 192, 222, 0.7)"{{elseif(absorptivity>=60)}} style="color:rgba(240, 173, 78, 0.7)"{{else}} style="color:#f40"{{/if}}>{{absorptivity.toFixed(2)}}%</em></td>
+        <td>&nbsp;&nbsp;<em>{{absorptivity.toFixed(2)}}</em></td>
       </tr>
       <tr>
         <td rowspan="4" align="center" width="80">班级信息</td>
