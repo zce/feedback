@@ -92,7 +92,8 @@
         </tr>
         <tr>
           <td>已完成测评人数</td>
-          <td style="color:#f30">{{item.receives_count}}人（{{item.attendance - item.receives_count >= 0 ? '还少' : '超出'}}：{{item.attendance - item.receives_count}}）</td>
+          <td style="color:#f30" v-if="item.attendance - item.receives_count >= 0">{{item.receives_count}}人（还少：{{item.attendance - item.receives_count}}人）</td>
+          <td style="color:#f30" v-if="item.attendance - item.receives_count < 0">{{item.receives_count}}人（超出：{{-(item.attendance - item.receives_count)}}人）</td>
         </tr>
         <tr v-if="item.status">
           <td>反馈状态</td>
@@ -111,20 +112,24 @@
     <div class="actions">
       <button class="btn btn-primary btn-lg btn-block" v-if="item.status === $config.status_keys.initial" @click="start()">开始反馈统计</button>
       <button class="btn btn-danger btn-lg btn-block" v-if="item.status === $config.status_keys.rating" @click="stop()">结束反馈统计</button>
-      <button class="btn btn-warning btn-lg btn-block" v-if="item.status === $config.status_keys.rated" @click="preview()">查看反馈结果</button>
+      <button class="btn btn-warning btn-lg btn-block" v-if="item.status === $config.status_keys.rated" @click="save()">保存反馈报告</button>
     </div>
   </div>
 </template>
 
 <script>
+  import fs from 'fs'
+  import path from 'path'
+  import xtpl from 'xtpl'
+
   export default {
     name: 'watch',
     pathname: '/watch/:item',
 
     data () {
       // const stamp = this.$route.params.item
-      // this.$storage.watch(stamp, () => this.loadData(stamp))
-      // return { item: this.loadData(stamp) }
+      // this.$storage.watch(stamp, () => this._loadData(stamp))
+      // return { item: this._loadData(stamp) }
       this.$root.$on('server_link_changed', () => {
         this.server_link = `http://${this.$root.server_address}:${this.$root.server_port}/`
       })
@@ -134,13 +139,13 @@
     route: {
       data (transition) {
         const stamp = transition.to.params.item
-        this.loadData(stamp)
-        this.$storage.watch(stamp, () => this.loadData(stamp))
+        this._loadData(stamp)
+        this.$storage.watch(stamp, () => this._loadData(stamp))
       }
     },
 
     methods: {
-      loadData (stamp) {
+      _loadData (stamp) {
         if (!stamp) return this.$router.go({ name: 'start' })
         const item = this.$storage.get(stamp)
         if (!item) return this.$router.go({ name: 'start' })
@@ -149,13 +154,37 @@
         return this.item
       },
 
+      _formatData () {
+        // 二维数组（第一个维度是学习目标，第二个是学生）
+        const temp = []
+        Object.keys(this.item.receives).forEach(ip => {
+          const marks = this.item.receives[ip].marks
+          Object.keys(marks).forEach(i => {
+            temp[i] = temp[i] || []
+            temp[i].push(marks[i])
+          })
+        })
+        return temp
+      },
+
+      _allPercents (answers = this._formatData()) {
+        const percents = {}
+        this.item.targets.forEach((t, i) => {
+          Object.keys(this.$config.answer_options).forEach((k, j) => {
+            const temp = answers[i]
+            const res = temp.filter(t => t === j).length / temp.length * 100
+            percents[j] = percents[j] || { total: 0, count: 0, ratio: this.$config.answer_options[j].ratio }
+            percents[j][i] = res
+            percents[j].total += res
+            percents[j].count += 1
+          })
+        })
+        return percents
+      },
+
       copy (txt) {
         this.$electron.clipboard.writeText(txt)
         this.$dialog.info('已经将打分链接复制到剪切板\n请将链接发送给学生')
-      },
-
-      save () {
-        this.$storage.set(this.item.stamp, this.item)
       },
 
       start () {
@@ -163,7 +192,7 @@
         if (this.item.status === this.$config.status_keys.initial) {
           // 开始测评
           this.item.status = this.$config.status_keys.rating
-          this.save()
+          this.$storage.set(this.item.stamp, this.item)
         }
       },
 
@@ -186,13 +215,32 @@
         if (this.item.status === this.$config.status_keys.rating) {
           // 测评完成状态
           this.item.status = this.$config.status_keys.rated
-          this.save()
+          this.$storage.set(this.item.stamp, this.item)
           this.stoping = false
         }
       },
 
-      preview () {
-        this.$router.go({ name: 'preview', params: { item: this.item.stamp } })
+      save () {
+        // path.join(this.$config.app.path, 'core.asar/www', 'report.xtpl')
+        xtpl.renderFile('D:\\zce\\Documents\\Repositories\\feedback\\app\\assets\\www\\report.xtpl', {
+          feedback: this.item,
+          answers: this._formatData(),
+          allPercents: this._allPercents,
+          options: this.$config.answer_options
+        }, (err, html) => {
+          if (err) return console.error(err) // alert('保存失败，请重试！')
+          // console.log(html)
+          this.$electron.remote.dialog.showSaveDialog({
+            title: `保存${this.item.date}详细报告`,
+            filters: [
+              { name: 'HTML', extensions: ['htm'] }
+            ],
+            defaultPath: path.join(this.$electron.remote.app.getPath('desktop'), `【每日反馈】${this.item.class_name}-${this.item.date}.htm`)
+          }, filename => {
+            if (!filename) return
+            fs.writeFile(filename, html, 'utf8', () => this.$electron.shell.showItemInFolder(filename))
+          })
+        })
       }
     }
   }

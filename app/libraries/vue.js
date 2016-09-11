@@ -48,5 +48,17 @@ Plugin.install = function (Vue, options) {
 
   Vue.filter('toFixed', (value, length) => parseFloat(value).toFixed(length || 2))
   Vue.filter('trim', { read: v => v && v.trim(), write: v => v && v.trim() })
+  Vue.filter('range', {
+    read: (value, max, min = 0) => {
+      if (value >= max) return max
+      if (value < min) return min
+      return value
+    },
+    write: (value, prev, max, min = 0) => {
+      if (value >= max) return max
+      if (value < min) return min
+      return value
+    }
+  })
   Vue.config.lang = option.get('lang', 'zh-CN')
 }

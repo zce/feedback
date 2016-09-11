@@ -53,13 +53,13 @@
       <div class="col-md-2">
         <div class="form-group">
           <label for="class_count">班级人数</label>
-          <input id="class_count" type="number" v-model="class_count" placeholder="班级人数" min="1" max="160">
+          <input id="class_count" type="number" v-model="class_count | range 160" lazy number placeholder="班级人数" min="1" max="160">
         </div>
       </div>
       <div class="col-md-2">
         <div class="form-group">
           <label for="attendance">出勤人数</label>
-          <input id="attendance" type="number" v-model="attendance" placeholder="出勤人数" min="1" max="160">
+          <input id="attendance" type="number" v-model="attendance | range 160" lazy number placeholder="出勤人数" min="1" max="160">
         </div>
       </div>
     </div>
