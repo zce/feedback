@@ -1,8 +1,7 @@
 const views = [
   require('../views/dashboard'),
   require('../views/start'),
-  require('../views/watch'),
-  require('../views/preview')
+  require('../views/watch')
 ]
 
 const routes = {}

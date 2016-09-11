@@ -221,8 +221,8 @@
       },
 
       save () {
-        // path.join(this.$config.app.path, 'core.asar/www', 'report.xtpl')
-        xtpl.renderFile('D:\\zce\\Documents\\Repositories\\feedback\\app\\assets\\www\\report.xtpl', {
+        // 'D:\\zce\\Documents\\Repositories\\feedback\\app\\assets\\www\\report.xtpl'
+        xtpl.renderFile(path.join(this.$config.app.path, 'core.asar/www', 'report.xtpl'), {
           feedback: this.item,
           answers: this._formatData(),
           allPercents: this._allPercents,
