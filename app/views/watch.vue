@@ -168,8 +168,11 @@
       },
 
       _allPercents (answers = this._formatData()) {
-        const percents = {}
+        const percents = { targets: {} }
+        let total = 0
+        let base = 0
         this.item.targets.forEach((t, i) => {
+          let itemScore = 0
           Object.keys(this.$config.answer_options).forEach((k, j) => {
             const temp = answers[i]
             const res = temp.filter(t => t === j).length / temp.length * 100
@@ -177,8 +180,14 @@
             percents[j][i] = res
             percents[j].total += res
             percents[j].count += 1
+            itemScore += res / 100 * this.$config.answer_options[j].ratio
           })
+          percents.targets[i] = itemScore * this.$config.score_options.base + this.$config.score_options.offset
+          const tBase = this.$config.score_options[t.highlight ? 'important' : 'normal']
+          base += tBase
+          total += percents.targets[i] * tBase
         })
+        percents.all = total / base
         return percents
       },
 
@@ -221,8 +230,18 @@
       },
 
       save () {
-        // 'D:\\zce\\Documents\\Repositories\\feedback\\app\\assets\\www\\report.xtpl'
+        // xtpl.renderFile('D:\\zce\\Documents\\Repositories\\feedback\\app\\assets\\www\\report.xtpl', {
+        //   feedback: this.item,
+        //   answers: this._formatData(),
+        //   allPercents: this._allPercents,
+        //   options: this.$config.answer_options
+        // }, (err, html) => {
+        //   if (err) return console.error(err) // alert('保存失败，请重试！')
+        //   const filename = path.join(this.$electron.remote.app.getPath('desktop'), `【每日反馈】${this.item.class_name}-${this.item.date}.htm`)
+        //   fs.writeFile(filename, html, 'utf8')
+        // })
         xtpl.renderFile(path.join(this.$config.app.path, 'core.asar/www', 'report.xtpl'), {
+        // xtpl.renderFile('D:\\zce\\Documents\\Repositories\\feedback\\app\\assets\\www\\report.xtpl', {
           feedback: this.item,
           answers: this._formatData(),
           allPercents: this._allPercents,

@@ -1,8 +1,4 @@
 {{~set(percents = allPercents(answers))~}}
-{{~set(absorptivity = 0)~}}
-{{~#each(percents)~}}
-{{~set(../absorptivity = ../absorptivity + (this.total / this.count * this.ratio))~}}
-{{~/each~}}
 <!DOCTYPE html>
 <html>
 
@@ -175,7 +171,7 @@
     <tbody>
       <tr class="danger">
         <td colspan="2" align="center">主观调查综合得分</td>
-        <td><em>{{absorptivity.toFixed(2)}}</em></td>
+        <td><em>{{percents.all.toFixed(2)}}</em></td>
       </tr>
       <tr>
         <td rowspan="4" align="center" width="80">班级信息</td>
@@ -221,29 +217,31 @@
   <!-- /基本信息 -->
   <!-- 学习目标吸收情况统计 -->
   <h2>学习目标吸收情况统计</h2>
+  <div id="chart">
+    <canvas id="main"></canvas>
+  </div>
   <table id="statistics" class="nowrap">
     <thead>
       <tr>
-        <th>学习目标</th>
-        {{#each(options)~}}
-        <th width="90" data-color="{{this.color}}">{{this.full}}</th>
+        <th width="120">学习目标</th>
+        {{#each(feedback.targets)~}}
+        <th class="{{this.highlight ? 'info' : 'default'}}">{{this.question}}</th>
         {{~/each}}
       </tr>
     </thead>
     <tbody>
       <tr class="success">
-        <td align="center">综合结果</td>
-        {{#each(options)~}}
-        {{set(tmp = percents[xindex].total/percents[xindex].count)}}
-        <td align="center" data-value="{{tmp}}">{{tmp.toFixed(2)}}%</td>
+        <td align="center">每个学习目标得分</td>
+        {{#each(feedback.targets)~}}
+        <td align="center" data-value="{{percents.targets[xindex]}}">{{percents.targets[xindex].toFixed(2)}}</td>
         {{~/each}}
       </tr>
-      {{#each(feedback.targets)~}}
-      <tr class="{{this.highlight ? 'info': 'default'}}">
-        <td>{{this.question}}</td>
-        {{#each(options)~}}
-        {{set(tmp = percents[xindex][../xindex])}}
-        <td align="center" data-value="{{tmp}}">{{tmp.toFixed(2)}}%</td>
+      {{#each(options)~}}
+      <tr data-color="{{this.color}}">
+        <td align="center">{{this.full}}</td>
+        {{#each(feedback.targets)~}}
+        {{set(tmp = percents[../xindex][xindex])}}
+        <td class="{{this.highlight ? 'info' : 'default'}}" align="center" data-value="{{tmp}}">{{tmp.toFixed(2)}}%</td>
         {{~/each}}
       </tr>
       {{~/each}}
@@ -304,57 +302,28 @@
     ;(function (global) {
       var Chart = global.Chart
       var document = global.document
-      // 标题栏中的选项集合
-      var thead = document.querySelector('#statistics > thead > tr')
-      var optionElements = document.querySelectorAll('#statistics > thead > tr > th + th')
-      var labels = []
-      var backgroundColor = []
-
-      // 获取通用数据信息
-      optionElements.forEach(function (e) {
-        labels.push(e.innerText)
-        backgroundColor.push(e.dataset['color'])
-        e.remove()
-      })
-      var th = document.createElement('th')
-      th.innerText = '吸收情况'
-      thead.appendChild(th)
-
-      // 单行数据集合
-      var itemElements = document.querySelectorAll('#statistics > tbody > tr')
-
-      itemElements.forEach(function (e) {
-        var label = e.children[0].innerText
-        var data = []
-        var dataElements = e.querySelectorAll('td + td')
-        dataElements.forEach(s => {
-          data.push(parseFloat(s.dataset['value']))
-          s.remove()
-        })
-        var td = document.createElement('td')
-        var canvas = document.createElement('canvas')
-        canvas.width = 300
-        canvas.height = 300
-        td.align = 'center'
-        td.appendChild(canvas)
-        e.appendChild(td)
-        new Chart(canvas, {
-          type: 'pie',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: label,
-              data: data,
-              backgroundColor: backgroundColor
-            }]
-          },
-          options: { responsive: false, maintainAspectRatio: true, animation: false }
-        })
-        var img = document.createElement('img')
-        img.src = canvas.toDataURL()
-        canvas.remove()
-        td.appendChild(img)
-      })
+      var canvas = document.getElementById('main')
+      var option = {
+        type: 'bar',
+        data: {
+          labels: [{{#each(feedback.targets)}}'{{this.question}}',{{/each}}],
+          datasets: [
+            {{~#each(options)~}}
+            {
+              label: '{{this.full}}',
+              data: [{{#each(feedback.targets)}}{{percents[../xindex][xindex]}},{{/each}}],
+              backgroundColor: '{{this.color}}'
+            },
+            {{~/each~}}
+          ]
+        },
+        options: { animation: false }
+      }
+      new Chart(canvas, option)
+      var img = document.createElement('img')
+      img.src = canvas.toDataURL()
+      document.getElementById('chart').appendChild(img)
+      canvas.remove()
     }(this))
   </script>
 </body>

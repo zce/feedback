@@ -54,7 +54,9 @@ config.answer_options = {
 
 config.score_options = {
   base: 25,
-  offset: 25
+  offset: 25,
+  important: 1.5,
+  normal: 1
 }
 
 export default Object.assign(config, {

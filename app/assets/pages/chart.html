@@ -5,19 +5,24 @@
   <title>Chart JS Demo</title>
 </head>
 <body>
-  <canvas id="main"></canvas>
+  <canvas id="main" height="100"></canvas>
   <script src="Chart.min.js"></script>
   <script>
   var ctx = document.getElementById('main');
   new Chart(ctx, {
-    type: 'pie',
+    type: 'bar',
     data: {
-      labels: ['非常清楚', '基本清楚', '有点模糊', '几乎不懂'],
+      labels: ['第一题', '第二题', '第三题', '第四题'],
       datasets: [
         {
-          label: '综合结果',
+          label: '非常清楚',
           data: [60.71, 23.57, 4.29, 11.43],
-          backgroundColor: ['#F48FB1', '#EF9A9A', '#80DEEA', '#81D4FA']
+          backgroundColor: '#F48FB1'
+        },
+        {
+          label: '基本清楚',
+          data: [60.71, 23.57, 4.29, 11.43],
+          backgroundColor: ['#EF9A9A', '#EF9A9A', '#80DEEA', '#81D4FA']
         }
       ]
     }
