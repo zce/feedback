@@ -234,14 +234,14 @@
       <tr class="success">
         <td align="center">综合结果</td>
         {{#each(options)~}}
-        <td align="center" data-value="{{percents[xindex].total/percents[xindex].count}}">{{percents[xindex].total/percents[xindex].count}}%</td>
+        <td align="center" data-value="{{percents[xindex].total/percents[xindex].count}}">{{percents[xindex].total/percents[xindex].count.toFixed(2)}}%</td>
         {{~/each}}
       </tr>
       {{#each(feedback.targets)~}}
       <tr class="{{this.highlight ? 'info': 'default'}}">
         <td>{{this.question}}</td>
         {{#each(options)~}}
-        <td align="center" data-value="{{percents[xindex][../xindex].toFixed(2)}}">{{percents[xindex][../xindex].toFixed(2)}}%</td>
+        <td align="center" data-value="{{percents[xindex][../xindex]}}">{{percents[xindex][../xindex].toFixed(2)}}%</td>
         {{~/each}}
       </tr>
       {{~/each}}
