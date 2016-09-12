@@ -3,13 +3,13 @@
  *   https://github.com/zce/feedback
  *
  * Date:
- *   2016-09-97T23:56:12.476Z
+ *   2016-09-12T03:56:12.476Z
  *
  * Maintainers:
  *   汪磊 <ice@wedn.net> (http://github.com/zce)
  *
  * License:
- *   https://github.com/zce/itcast-tms/tree/master/LICENSE
+ *   https://github.com/zce/feedback/tree/master/LICENSE
  *   Released under the MIT license
  *
  * Thanks:
