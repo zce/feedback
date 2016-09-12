@@ -112,7 +112,7 @@
     <div class="actions">
       <button class="btn btn-primary btn-lg btn-block" v-if="item.status === $config.status_keys.initial" @click="start()">开始反馈统计</button>
       <button class="btn btn-danger btn-lg btn-block" v-if="item.status === $config.status_keys.rating" @click="stop()">结束反馈统计</button>
-      <button class="btn btn-warning btn-lg btn-block" v-if="item.status === $config.status_keys.rated" @click="save()">保存反馈报告</button>
+      <button class="btn btn-warning btn-lg btn-block" v-if="item.status === $config.status_keys.rated" @click="save()">保存并预览反馈报告</button>
     </div>
   </div>
 </template>
@@ -241,7 +241,6 @@
         //   fs.writeFile(filename, html, 'utf8')
         // })
         xtpl.renderFile(path.join(this.$config.app.path, 'core.asar/www', 'report.xtpl'), {
-        // xtpl.renderFile('D:\\zce\\Documents\\Repositories\\feedback\\app\\assets\\www\\report.xtpl', {
           feedback: this.item,
           answers: this._formatData(),
           allPercents: this._allPercents,
@@ -257,7 +256,11 @@
             defaultPath: path.join(this.$electron.remote.app.getPath('desktop'), `【每日反馈】${this.item.class_name}-${this.item.date}.htm`)
           }, filename => {
             if (!filename) return
-            fs.writeFile(filename, html, 'utf8', () => this.$electron.shell.showItemInFolder(filename))
+            // fs.writeFile(filename, html, 'utf8', () => this.$electron.shell.showItemInFolder(filename))
+            fs.writeFile(filename, html, 'utf8', () => {
+              const preview = new this.$electron.remote.BrowserWindow({ width: 820, height: 720, useContentSize: true })
+              preview.loadURL(`file://${filename}`)
+            })
           })
         })
       }

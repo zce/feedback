@@ -225,7 +225,7 @@
       <tr>
         <th width="120">学习目标</th>
         {{#each(feedback.targets)~}}
-        <th class="{{this.highlight ? 'info' : 'default'}}">{{this.question}}</th>
+        <th class="{{this.highlight ? 'info' : 'default'}}" title="{{this.question}}">{{this.question}}</th>
         {{~/each}}
       </tr>
     </thead>
@@ -284,7 +284,7 @@
       <tr>
         <td title="{{ip}}" align="center">{{feedback.name}}</td>
         {{#each(feedback.marks)~}}
-        <td>{{options[this].short}}</td>
+        <td align="center">{{options[this].short}}</td>
         {{~/each}}
       </tr>
       {{~/each}}
@@ -309,11 +309,7 @@
           labels: [{{#each(feedback.targets)}}'{{this.question}}',{{/each}}],
           datasets: [
             {{~#each(options)~}}
-            {
-              label: '{{this.full}}',
-              data: [{{#each(feedback.targets)}}{{percents[../xindex][xindex]}},{{/each}}],
-              backgroundColor: '{{this.color}}'
-            },
+            { label: '{{this.full}}', data: [{{#each(feedback.targets)}}{{percents[../xindex][xindex]}},{{/each}}], backgroundColor: '{{this.color}}' },
             {{~/each~}}
           ]
         },
