@@ -39,9 +39,7 @@ config.server = {
 config.status_keys = {
   initial: '尚未开始统计',
   rating: '统计中',
-  rated: '统计完成',
-  sending: '邮件发送中',
-  send: '邮件发送完成'
+  rated: '统计完成'
 }
 
 // answeroptions
