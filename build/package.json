@@ -17,8 +17,8 @@
     "webpack",
     "feedback"
   ],
-  "author": "iceStone <ice@micua.com> (http://blog.wedn.net/)",
-  "license": "ISC",
+  "author": "iceStone <ice@wedn.net> (http://wedn.net/)",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/zce/feedback/issues"
   },
