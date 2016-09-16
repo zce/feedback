@@ -249,15 +249,14 @@
           if (err) return alert('保存失败，请重试！')
           this.$electron.remote.dialog.showSaveDialog({
             title: `保存${this.item.date}详细报告`,
-            filters: [
-              { name: 'HTML', extensions: ['htm'] }
-            ],
+            filters: [{ name: 'HTML', extensions: ['htm'] }],
             defaultPath: path.join(this.$electron.remote.app.getPath('desktop'), `【每日反馈】${this.item.class_name}-${this.item.date}.htm`)
           }, filename => {
             if (!filename) return
             // fs.writeFile(filename, html, 'utf8', () => this.$electron.shell.showItemInFolder(filename))
             fs.writeFile(filename, html, 'utf8', () => {
-              const preview = new this.$electron.remote.BrowserWindow({ width: 820, height: 720, useContentSize: true })
+              const preview = new this.$electron.remote.BrowserWindow({ minimizable: false, maximizable: false })
+              preview.maximize()
               preview.loadURL(`file://${filename}`)
             })
           })
