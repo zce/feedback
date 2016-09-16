@@ -7,28 +7,13 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
   <title>【每日反馈】{{feedback.class_name}}-{{feedback.date}}</title>
   <style>
-    @media (min-width: 544px) {
-      body {
-        margin: 20px 10px
-      }
+    html {
+      font-size: 9pt;
     }
 
-    @media (min-width: 768px) {
-      body {
-        margin: 40px 30px
-      }
-    }
-
-    @media (min-width: 992px) {
-      body {
-        margin: 70px 60px
-      }
-    }
-
-    @media (min-width: 1200px) {
-      body {
-        margin: 120px 100px
-      }
+    body {
+      width: 1400px;
+      margin: 20px auto;
     }
 
     h1,
@@ -113,43 +98,57 @@
       color: #373A3E;
     }
     .primary {
-      background-color: #43a7fd;
+      background-color: #57b0fd;
       /* #0275d8 */
-      color: #fff;
+      color: #d9534f;
     }
     .success {
-      background-color: #a3d7a3;
+      background-color: #b1ddb1;
       /* #5cb85c */
-      color: #fff;
+      color: #d9534f;
     }
     .info {
-      background-color: #b0e1ef;
+      background-color: #c1e7f2;
       /* #5bc0de */
-      color: #fff;
+      color: #d9534f;
     }
     .warning {
-      background-color: #f8d9ac;
+      background-color: #fae2bf;
       /* #f0ad4e */
-      color: #fff;
+      color: #d9534f;
     }
     .danger {
-      background-color: #eba5a3;
+      background-color: #efb5b4;
       /* #d9534f */
       color: #fff;
     }
 
-    .nowrap th,
+    .nowrap th {
+
+    }
+
     .nowrap td {
       white-space: nowrap;
       overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 0;
-      min-width: 50px !important;
+      /*text-overflow: ellipsis;*/
+      /*max-width: 0;*/
+      min-width: 74px;
     }
 
     .danger {
       font-size: 20px;
+      font-weight: bold;
       line-height: 2;
+    }
+
+    #chart {
+      margin-left: 92px;
+    }
+
+    #statistics,
+    #raw {
+      margin-top: 0;
+      table-layout: fixed;
     }
 
     img {
@@ -219,14 +218,14 @@
   <!-- 学习目标吸收情况统计 -->
   <h2>学习目标吸收情况统计</h2>
   <div id="chart">
-    <canvas id="main"></canvas>
+    <canvas id="main" height="60"></canvas>
   </div>
-  <table id="statistics" class="nowrap">
+  <table id="statistics" class="nowrap" style="margin-top: 0">
     <thead>
       <tr>
-        <th width="120">学习目标</th>
+        <th width="100">学习目标</th>
         {{#each(feedback.targets)~}}
-        <th class="{{this.highlight ? 'info' : 'default'}}" title="{{this.question}}">{{this.question}}</th>
+        <th class="{{this.highlight ? 'info' : 'default'}}" title="{{this.question}}" width="100%">{{this.question}}</th>
         {{~/each}}
       </tr>
     </thead>
@@ -271,12 +270,12 @@
   <!-- /学员意见或建议 -->
   <!-- 统计原始数据 -->
   <h2>统计原始数据</h2>
-  <table id="row" class="nowrap">
+  <table id="raw" class="nowrap">
     <thead>
       <tr>
         <th width="60">姓名</th>
         {{#each(feedback.targets)~}}
-        <th title="{{this.question}}">{{this.question}}</th>
+        <th title="{{this.question}}" width="100%">{{this.question}}</th>
         {{~/each}}
       </tr>
     </thead>
@@ -285,7 +284,7 @@
       <tr>
         <td title="{{ip}}" align="center">{{feedback.name}}</td>
         {{#each(feedback.marks)~}}
-        <td align="center">{{options[this].short}}</td>
+        <td align="center" style="background-color: {{options[this].color}}; opacity: .7">{{options[this].short}}</td>
         {{~/each}}
       </tr>
       {{~/each}}
@@ -307,7 +306,7 @@
       var option = {
         type: 'bar',
         data: {
-          labels: [{{#each(feedback.targets)}}'{{this.question}}',{{/each}}],
+          labels: [{{#each(feedback.targets)}}'',{{/each}}],
           datasets: [
             {{~#each(options)~}}
             { label: '{{this.full}}', data: [{{#each(feedback.targets)}}{{percents[../xindex][xindex]}},{{/each}}], backgroundColor: '{{this.color}}' },

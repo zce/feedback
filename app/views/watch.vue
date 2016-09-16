@@ -236,7 +236,7 @@
         //   allPercents: this._allPercents,
         //   options: this.$config.answer_options
         // }, (err, html) => {
-        //   if (err) return console.error(err) // alert('保存失败，请重试！')
+        //   if (err) return console.error(err)
         //   const filename = path.join(this.$electron.remote.app.getPath('desktop'), `【每日反馈】${this.item.class_name}-${this.item.date}.htm`)
         //   fs.writeFile(filename, html, 'utf8')
         // })
@@ -246,8 +246,7 @@
           allPercents: this._allPercents,
           options: this.$config.answer_options
         }, (err, html) => {
-          if (err) return console.error(err) // alert('保存失败，请重试！')
-          // console.log(html)
+          if (err) return alert('保存失败，请重试！')
           this.$electron.remote.dialog.showSaveDialog({
             title: `保存${this.item.date}详细报告`,
             filters: [
