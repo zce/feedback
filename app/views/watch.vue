@@ -230,7 +230,7 @@
       },
 
       save () {
-        // xtpl.renderFile('D:\\zce\\Documents\\Repositories\\feedback\\app\\assets\\www\\report.xtpl', {
+        // return xtpl.renderFile('D:\\zce\\Documents\\Repositories\\feedback\\app\\assets\\www\\report.xtpl', {
         //   feedback: this.item,
         //   answers: this._formatData(),
         //   allPercents: this._allPercents,
@@ -240,6 +240,7 @@
         //   const filename = path.join(this.$electron.remote.app.getPath('desktop'), `【每日反馈】${this.item.class_name}-${this.item.date}.htm`)
         //   fs.writeFile(filename, html, 'utf8')
         // })
+
         xtpl.renderFile(path.join(this.$config.app.path, 'core.asar/www', 'report.xtpl'), {
           feedback: this.item,
           answers: this._formatData(),
